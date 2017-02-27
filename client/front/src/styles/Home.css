@@ -1,0 +1,167 @@
+/* 定义字体，客户端会主动下载服务器的字体文件 */
+@font-face{
+    font-family: 'sourcesanspro';
+    src: url('./fonts/sourcesanspro.woff2');
+}
+
+::selection {
+    color: #FFFFFF;
+    background-color: #42b983;
+}
+
+:global {
+    body{
+        font-family: 'sourcesanspro', 'Helvetica Neue', Arial, sans-serif;
+        color: #40514E;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    header {
+        padding-top: 20px;
+
+        .nav {
+            &.active {
+                border-bottom: 2px solid #42b983;
+            }
+        }
+    }
+
+    main {
+        padding-bottom: 30px;
+    }
+
+    footer {
+        height: 100px;
+        width: 100%;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .paginator{
+        text-align: center;
+        a,
+        a:hover{
+            color: rgb(2, 210, 116);
+            font-size: 1.8em;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    }
+
+    @media screen and (max-width: 767px){
+        header .navbar .navbar-header{
+            text-align: center;
+            margin-right: 0;
+
+            a{
+                float: none;
+            }
+        }
+    }
+}
+
+.navBar {
+    background-color: #fff;
+    border: none;
+
+    .logo{
+        margin-right: 80px;
+
+        a {
+            display: inline-block;;
+            height: 70px;
+            width: 80px;
+            background-image: url(../images/An-l.png);
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    }
+
+    .nav{
+
+        & > li{
+            padding: 20px 20px;
+            height: 60px;
+            line-height: 1.6;
+            box-sizing: border-box;
+            text-align: center;
+
+            &.active a{
+                border-bottom: 2px solid #42b983;
+            }
+
+            a {
+                padding: 0;
+                font-size: 1.1em;
+                line-height: 1.4;
+                color: #2c3e50;
+                box-sizing: border-box;
+
+
+                &:hover {
+                    border-bottom: 2px solid #42b983;
+                }
+            }
+        }
+    }
+    .navBarForm {
+        padding: 6px 0;
+    }
+}
+
+.post {
+    padding: 10px 0 20px 0;
+    border-bottom: 1px solid #ddd;
+
+    &:last-child {
+        border-bottom: 0;
+    }
+
+    a,
+    a:hover {
+        color: #2c3e50;
+        text-decoration: none;
+    }
+
+    .title a:hover{
+        border-bottom: 2px solid #42b983;
+    }
+
+    .time {
+        color: #7f8c8d;
+    }
+
+    .tags {
+        margin: 4px 0 15px 0;
+
+        & a {
+            color: #fff;
+            display: inline-block;
+            margin-right: 5px;
+            padding: .3em .6em;
+            border-radius: .25em;
+            font-size: .75em;
+            font-weight: bold;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+
+            background-color: #42b983;
+        }
+    }
+    .readMore,
+    .readMore:hover{
+        font-weight: bold;
+        color: #42b983;
+    }
+}
+
+.about {
+
+}

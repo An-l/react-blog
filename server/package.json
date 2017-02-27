@@ -1,0 +1,26 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node start.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "6.13.2",
+    "babel-polyfill": "6.13.0",
+    "babel-preset-es2015-node6": "0.3.0",
+    "babel-preset-stage-3": "6.5.0",
+    "bluebird": "^3.4.7",
+    "koa": "2.0.0",
+    "koa-bodyparser": "3.2.0",
+    "koa-router": "^7.0.0"
+  },
+  "devDependencies": {
+    "log4js": "^1.1.0",
+    "mongoose": "^4.8.4",
+    "restc": "0.0.4"
+  }
+}
