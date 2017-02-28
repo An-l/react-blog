@@ -1,6 +1,6 @@
 const fs = require('fs');
 const Koa = require('koa');
-const cors = require('cors'); //koa跨域中间件
+const cors = require('kcors'); //koa跨域中间件
 const log = require('./utils/log');
 const bodyParser = require('koa-bodyparser');
 const koaRouter = require('koa-router');
