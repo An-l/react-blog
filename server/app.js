@@ -1,5 +1,6 @@
 const fs = require('fs');
 const Koa = require('koa');
+const cors = require('cors'); //koa跨域中间件
 const log = require('./utils/log');
 const bodyParser = require('koa-bodyparser');
 const koaRouter = require('koa-router');
@@ -17,6 +18,7 @@ const router = koaRouter();
 // 此处开始堆叠各种中间件
 //...
 app.use(bodyParser());
+app.use(cors()); //跨域中间件
 app.use(restc.koa2());
 // app.use(controller());
 
