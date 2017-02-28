@@ -18,7 +18,7 @@ class HomeLayout extends React.Component {
                 },
                 {
                     'name': 'TAGS',
-                    'path': '/tags',
+                    'path': '/tag',
                     'index': 1
                 },
                 {
@@ -42,7 +42,7 @@ class HomeLayout extends React.Component {
         switch (path) {
             case '/':
                 break;
-            case '/tags':
+            case '/tag':
                 index = 1;
                 break;
             case '/about':

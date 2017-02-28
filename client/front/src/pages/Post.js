@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router';
+import { getPostById } from '../utils/request';
 
 import style from '../styles/Home.css'
 
@@ -15,11 +16,10 @@ class Post extends React.Component {
     componentWillMount() {
         // console.log(this.props.params);
         const id = this.props.params.id;
-        fetch('http://localhost:3000/posts?id=' + id)
-            .then(res => res.json())
+        getPostById(id)
             .then(res => {
                 this.setState({
-                    post: res[0]
+                    post: res
                 });
             });
     }
@@ -30,24 +30,22 @@ class Post extends React.Component {
         return (
             <div className={style.post}>
                 <h2 className={style.title}>
-                    <Link to={`/posts/${post.id}`}>{post.title}</Link>
+                    {post.title}
                 </h2>
-                <div className={style.time}>{post.time}</div>
+                <div className={style.time}>{post.createdAt}</div>
                 <div className={style.tags}>
                     {
                         post.tags ?
                             post.tags.map((tag) => {
                                 return (
-                                    <a key={tag} href="#/tags">{tag}</a>
+                                    <Link key={tag} to={`/tag/${tag}`}>{tag}</Link>
                                 )
                             })
                             : ''
                     }
                 </div>
-                <div className="post-content">
-                    <p>
-                        {post.content}
-                    </p>
+                <div className="post-content"
+                    dangerouslySetInnerHTML={{__html: post.content}}>
                 </div>
             </div>
         )

@@ -6,14 +6,16 @@ import HomeLayout from './layouts/HomeLayout'
 import HomePage from './pages/Home'
 import PostPage from './pages/Post'
 import TagsPage from './pages/Tags'
+import TagPage from './pages/Tag'
 import AboutPage from './pages/About'
 
 ReactDOM.render((
     <Router history={hashHistory}>
         <Route path='/' component={HomeLayout}>
             <IndexRoute component={HomePage} />
-            <Route path='/posts/:id' component={PostPage} />
-            <Route path='/tags' component={TagsPage} />
+            <Route path='/post/:id' component={PostPage} />
+            <Route path='/tag' component={TagsPage} />
+            <Route path='/tag/:name' component={TagPage} />
             <Route path='/about' component={AboutPage} />
             {/* <Route path='/user/edit/:id' component={UserEditPage} /> */}
         </Route>
