@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "set NODE_ENV=development&&webpack-dev-server"
+    "dev": "set NODE_ENV=development&&webpack-dev-server --history-api-fallback"
   },
   "author": "An-l",
   "license": "ISC",
@@ -17,6 +17,7 @@
     "babel-preset-react": "^6.23.0",
     "css-loader": "^0.26.1",
     "file-loader": "^0.10.0",
+    "node-sass": "^4.5.0",
     "postcss-loader": "^1.3.0",
     "postcss-smart-import": "^0.6.7",
     "precss": "^1.4.0",
@@ -24,6 +25,7 @@
     "react-dom": "^15.4.2",
     "react-router": "^3.0.2",
     "react-transform-hmr": "^1.0.4",
+    "sass-loader": "^6.0.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^2.2.1",

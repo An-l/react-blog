@@ -11,6 +11,7 @@ class Tag extends Component {
 
         this.state = {
             postList: []
+            tagName: ''
         };
     }
 

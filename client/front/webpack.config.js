@@ -1,4 +1,6 @@
-const {resolve} = require('path');
+const {
+    resolve
+} = require('path');
 const webpack = require('webpack');
 
 module.exports = {
@@ -43,20 +45,24 @@ module.exports = {
     },
 
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.(js|jsx)$/,
                 use: ['babel-loader'],
                 exclude: /node_modules/
-            }, {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader?modules&importLoaders=1', 'postcss-loader']
+            },
+            // {
+            //     test: /\.css$/,
+            //     use: ['style-loader', 'css-loader?modules&importLoaders=1']
+            // }, 
+            {
+                test: /\.(css|scss)$/,
+                loaders: ["style-loader", "css-loader?sourceMap", "sass-loader?sourceMap"]
             }, {
                 test: /\.(png|jpg)$/,
                 loader: 'file-loader?name=images/[hash:4].[name].[ext]'
             }, {
-                test: /\.(eot|svg|ttf|woff|woff2)\w*/,
-                loader: 'file-loader?name=fonts/[name].[ext]'
+                test: /\.(eot|svg|ttf|woff|woff2)\??.*$/,
+                loader: 'url-loader?name=fonts/[name].[ext]'
             }
         ]
     },

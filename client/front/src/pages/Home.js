@@ -6,7 +6,7 @@ import {getPostList} from '../utils/request';
 
 import style from '../styles/Home.css'
 
-class Tags extends React.Component {
+class Home extends React.Component {
     constructor (props) {
         super(props);
 
@@ -96,4 +96,4 @@ class Tags extends React.Component {
     }
 }
 
-export default Tags;
+export default Home;
