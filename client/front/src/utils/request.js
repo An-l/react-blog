@@ -30,6 +30,20 @@ export const getTagNum = (tag) => {
     let url = `post?conditions={"tags":"${tag}"}&count=1`;
     return request('GET', url);
 };
+export const countPost = () => {
+    let url = 'post?count=1';
+    return request('GET', url);
+}
+export const pageQuery = ( currentPage=1, limit=2 ) => {
+    let postNum = countPost(); // 文章总数
+    let pageNum = Math.ceil(postNum/limit); // 总页数
+    let start = limit * (currentPage - 1);
+
+    if (currentPage <= pageNum) {
+        let url = `post?limit=${limit}&&skip=${start}`;
+        return request('GET', url);
+    }
+}
 // export const getCreatedAtTimeList = () => {
 //     let url = `post?select={"createdAt":1}`;
 //     return request('GET', url);

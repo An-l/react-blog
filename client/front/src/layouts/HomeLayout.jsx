@@ -11,7 +11,9 @@ class HomeLayout extends Component {
                     <NavBar />
                 </header>
                 <main className='main'>
+                
                     {children}
+                  
                     <footer className="footer">
                         © 2017&nbsp;-&nbsp; An-l的小站 &nbsp;-&nbsp;
                         <a target="_blank" href="https://github.com/an-l/blog">博客源码</a>

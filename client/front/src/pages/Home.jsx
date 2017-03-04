@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import PostList from '../components/PostList.jsx'
+import Pagination from '../components/Pagination.jsx';
 
 import {getPostList} from '../utils/request';
 
@@ -9,6 +10,7 @@ class Home extends Component {
         super(props);
         
         this.state = {
+            currentPage: 1;
             postList: []
         }
     }
@@ -16,7 +18,7 @@ class Home extends Component {
     
     componentWillMount() {
         // 获取文章列表
-        getPostList()
+        pageQuery()
             .then(res => {
                 this.setState({
                     postList: res
@@ -26,11 +28,12 @@ class Home extends Component {
     
     
     render() {
-        const {postList} = this.state;
+        const {currentPage, postList} = this.state;
 
         return (
             <section>
                 <PostList postList={postList} />
+                <Pagination currentPage={currentPage}/>
             </section>
         );
     }

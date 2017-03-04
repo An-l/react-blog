@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
+import style from './styles/scss/index.scss'
+
 // import HomeLayout from './layouts/HomeLayout'
 // import HomePage from './pages/Home'
 // import PostPage from './pages/Post'
@@ -15,6 +17,7 @@ import HomePage from './pages/Home.jsx'
 import PostPage from './pages/Post.jsx'
 import ArchivePage from './pages/Archive.jsx'
 import TagsPage from './pages/Tags.jsx'
+import TagPage from './pages/Tag.jsx'
 import AboutPage from './pages/About.jsx'
 
 ReactDOM.render((
@@ -24,6 +27,7 @@ ReactDOM.render((
             <Route path='/post/:id' component={PostPage} />
             <Route path='/archive' component={ArchivePage} />
             <Route path='/tag' component={TagsPage} />
+            <Route path='/tag/:name' component={TagPage} />
             <Route path='/about' component={AboutPage} />
         </Route>
     </Router>

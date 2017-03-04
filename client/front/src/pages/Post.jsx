@@ -39,30 +39,44 @@ class Post extends Component {
             </div>
         )
     }
+    renderTags ( tags=[] ) {
+        return (
+            tags.map(tag => {
+                return (
+                    <Link to={`tag/${tag}`} key={tag}>
+                        <code className="notebook">{tag}</code>&nbsp;
+                    </Link> 
+                )
+            })
+        )
+    }
 
     render() {
         const {post} = this.state;
 
         return (
-            <article className="post">
-                <div className="meta">
-                    <div className="date">{post.createdAt}</div>
-                </div>
-                <h2 className="title">{post.title}</h2>
-                <div className="content">
+            <section className="post">
+                <header>
+                    <div className="post-meta">
+                        <div className="date">{post.createdAt}</div>
+                    </div>
+                    <h2 className="post-title">{post.title}</h2>
+                </header>
+
+                <div className="post-content">
                     { post.toc !== "" ? this.renderToc(post) : '' }
                     { post.content !== "" ? this.renderContent(post) : '' }
                 </div>
 
                 <p>-- END --</p>
-                <div className="post-info"><p> 发表于 <i>2017-02-25 15:46:41</i> ，
+                <div className="post-info"><p> 发表于 <i>{post.createdAt}</i> ，
                     添加在分类「
-                    <a href='#'><code className="notebook">Node.js</code></a> 
+                    <code className="notebook">{post.category}</code>
                     」下 ，并被添加「
-                    <a href='#'><code className="notebook">git</code></a> 
-                    」标签 ，最后修改于 <i>2017-02-27 13:28:15</i></p>
+                    {this.renderTags(post.tags)}
+                    」标签 ，最后修改于 <i>{post.updatedAt}</i></p>
                 </div>
-            </article>
+            </section>
         );
     }
 }

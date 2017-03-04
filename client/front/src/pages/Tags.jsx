@@ -49,9 +49,9 @@ class Tags extends Component {
         const {tags, postNumObj} = this.state;
 
         return (
-            <article className='tags'>
+            <section className='tags'>
                 <h2 className='title'>标签</h2>
-                <section className='content'>
+                <div className='tags-content'>
                     {
                         Object.keys(postNumObj).map((tag) => {
                             return (
@@ -61,8 +61,8 @@ class Tags extends Component {
                             )
                         })
                     }
-                </section>
-            </article>
+                </div>
+            </section>
         );
     }
 }

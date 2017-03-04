@@ -1,0 +1,24 @@
+// Colors
+$color-default: #666;
+$color-a-default: #2479cc;
+$color-title-default: #333;
+$color-title-hover: #2479cc;
+$color-code:#2479cc;
+$color-code-backgroud:#f2f2f2;
+$color-border-default: #ddd;
+
+$color-nav-default: #fff;
+$color-nav-backgroud:#222;
+
+
+%post-meta {
+    float: right;
+    font-size: .9em;
+    line-height: 2;
+    color: #555;
+}
+
+%post-title {
+    margin: 0;
+    margin-bottom: 25px;
+}

@@ -56,7 +56,7 @@ module.exports = {
             // }, 
             {
                 test: /\.(css|scss)$/,
-                loaders: ["style-loader", "css-loader?sourceMap", "sass-loader?sourceMap"]
+                loaders: ["style-loader", "css-loader", "sass-loader"]
             }, {
                 test: /\.(png|jpg)$/,
                 loader: 'file-loader?name=images/[hash:4].[name].[ext]'

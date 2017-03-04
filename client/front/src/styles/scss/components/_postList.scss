@@ -1,0 +1,30 @@
+@import "helpers/parameters";
+
+.post-list{
+    margin-top: -30px;
+    
+
+    .post-item {
+        padding: 30px 0;
+        border-bottom: 1px solid $color-border-default;
+        border-top: 1px solid #fff;
+        
+        &-title{
+            @extend %post-title;
+            color: $color-title-default;
+        }
+
+        &-meta {
+            @extend %post-meta;
+        }
+        
+        &-summary {
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        &:last-child {
+            border: none;
+        }
+    }
+}

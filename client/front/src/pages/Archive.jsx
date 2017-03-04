@@ -75,12 +75,12 @@ class Archive extends Component {
     
     render() {
         return (
-            <article className='archive'>
+            <section className='archive'>
                 <h2 className='title'>归档</h2>
                 {
                     this.renderArchiveList()
                 }
-            </article>
+            </section>
         );
     }
 }

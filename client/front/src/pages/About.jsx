@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 class About extends Component {
     render() {
         return (
-            <article className='about'>
+            <section className='about'>
                 <h2 className='title'>关于</h2>
                 <p>大四狗一枚...</p>
-            </article>
+            </section>
         );
     }
 }
