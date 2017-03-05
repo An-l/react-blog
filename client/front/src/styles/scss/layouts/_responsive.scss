@@ -1,0 +1,80 @@
+@import "helpers/parameters";
+
+@media screen and (max-width: $tablet){
+    .navbar-wrap {
+        width: 75px;
+
+        h1 {
+            display: none;
+        }
+        .navbar {
+            .nav {
+                margin-top: 100px ;
+                li {
+                    height: 60px;
+                    line-height: 60px;
+                    a {
+                        span.text {
+                            display: none;
+                        }
+                    }
+                }
+            }
+            .sider-nav {
+                margin: 0;
+                a {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    .main {
+        padding-left: 115px;
+    }
+    
+}
+
+@media screen and (max-width: $mobile) {
+   .navbar-wrap { 
+       top: 0;
+       width: 100%;
+       height: auto;
+       text-align: center;
+       border-bottom-left-radius: 40px;
+       border-bottom-right-radius: 40px;
+
+        &:hover {
+            background-position-x: 0;
+        }
+
+       .navbar {
+           margin: 0;
+
+           .nav {
+               margin: 0;
+
+                &>li {
+                    display: inline-block;
+                    width: auto;
+                }
+           }
+
+           .sider-nav {
+               display: none;
+           }
+       }
+   }
+
+   .main {
+       padding: 62px 20px 0 20px;
+
+       .date {
+           display: none;
+       }
+       
+       #toc {
+           float: none;
+       }
+   }
+}
