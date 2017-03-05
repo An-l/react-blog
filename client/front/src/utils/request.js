@@ -17,7 +17,7 @@ export default function request (method, url, body) {
 }
 
 export const getPostList = () => {
-    let url = 'post?sort=1'; //按时间倒序，新->旧
+    let url = 'post'; //按时间倒序，新->旧
     return request('GET', url)
 };
 export const getPostById = (id) => request('GET', 'post/' + id);
@@ -34,15 +34,16 @@ export const countPost = () => {
     let url = 'post?count=1';
     return request('GET', url);
 }
-export const pageQuery = ( currentPage=1, limit=2 ) => {
-    let postNum = countPost(); // 文章总数
-    let pageNum = Math.ceil(postNum/limit); // 总页数
-    let start = limit * (currentPage - 1);
+export const getPostByPage = ( pageNum=0, currentPage=1, limit=2 ) => {
+    let start, // 从第几篇文章开始
+        url; 
 
-    if (currentPage <= pageNum) {
-        let url = `post?limit=${limit}&&skip=${start}`;
-        return request('GET', url);
-    }
+        start = limit * (currentPage - 1);
+        
+        if (currentPage <= pageNum) {
+            url = `post?limit=${limit}&&skip=${start}`;
+            return request('GET', url);
+        }
 }
 // export const getCreatedAtTimeList = () => {
 //     let url = `post?select={"createdAt":1}`;

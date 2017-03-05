@@ -5,6 +5,7 @@ main > section.post {
     img {
         display: block;
         max-width: 100%;
+        height: auto;
         border: 1px solid #ccc;
     }
     .post-title {

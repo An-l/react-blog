@@ -9,8 +9,11 @@
     text-align: center;
     color: $color-a-default;
 
-    &>a {
+    &>.next {
         float: right;
+    }
+    &>.prev {
+        float: left;
 
     }
 }
