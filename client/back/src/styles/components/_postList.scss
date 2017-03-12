@@ -1,0 +1,27 @@
+
+
+.table {
+    
+    a {
+        color: #0343bb;
+        &:hover {
+            color: inherit;
+            text-decoration: underline;
+        }
+    }
+    thead {
+        th {
+            border-top: none;
+        }
+    }
+
+    .postNum {
+        &>a{
+            color: red;
+            :hover {
+                color: red;
+            }
+        }
+        
+    }
+}

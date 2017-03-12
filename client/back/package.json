@@ -1,0 +1,47 @@
+{
+  "name": "back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "set NODE_ENV=development&&webpack-dev-server --history-api-fallback"
+  },
+  "author": "An-l",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^6.7.3",
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.2.10",
+    "babel-plugin-react-transform": "^2.0.2",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
+    "css-loader": "^0.26.1",
+    "file-loader": "^0.10.0",
+    "node-sass": "^4.5.0",
+    "postcss-loader": "^1.3.0",
+    "precss": "^1.4.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-router": "^3.0.2",
+    "react-transform-hmr": "^1.0.4",
+    "sass-loader": "^6.0.2",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.3.0"
+  },
+  "dependencies": {
+    "bootstrap": "^4.0.0-alpha.6",
+    "draft-js": "^0.10.0",
+    "draft-js-inline-toolbar-plugin": "^2.0.0-beta9",
+    "draft-js-linkify-plugin": "^2.0.0-beta9",
+    "draft-js-markdown-shortcuts-plugin": "0.0.6",
+    "draft-js-plugins-editor": "^2.0.0-beta9",
+    "draft-js-richbuttons-plugin": "^2.0.0",
+    "react-addons-css-transition-group": "^15.4.2",
+    "react-addons-transition-group": "^15.4.2",
+    "react-simplemde-editor": "^3.6.10",
+    "reactstrap": "^4.2.0",
+    "simplemde": "^1.11.2"
+  }
+}
