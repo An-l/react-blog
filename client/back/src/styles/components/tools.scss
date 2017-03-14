@@ -1,0 +1,24 @@
+.tools {
+    overflow: hidden;
+    background-color: #ecf0f1;
+    border-top-right-radius: 15px;
+    padding: 0 20px;
+    height: 54px;
+    // margin-left: 80px;
+    border-bottom: 1px solid #dddddd;
+
+    .tools-title {
+        float: left;
+        span {
+            height: 54px;
+            line-height: 54px;
+            font-size: 1.1em;
+        }
+    }
+
+    .input-group {
+        width: 250px;
+        float: right;
+        padding: 11px;
+    }
+}

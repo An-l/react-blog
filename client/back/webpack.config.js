@@ -67,7 +67,7 @@ module.exports = {
                 },{
                     loader: "sass-loader?outputStyle=expanded&sourceMap" // compiles Sass to CSS
                 },],
-                exclude: /node_modules/
+                // exclude: /node_modules/
             }, {
                 test: /\.(png|jpg)$/,
                 loader: 'file-loader?name=images/[hash:4].[name].[ext]'

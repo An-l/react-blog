@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 
+import { InputGroup, InputGroupButton, Input, Button } from 'reactstrap';
+
 class Tools extends Component {
     render() {
         return (
             <div className='tools'>
-                <form className="search">
-                    <input type="text" className="form-control" id="search-input" placeholder="搜索..." />
-                    <div className="dropdown-menu bd-search-results" id="search-results"></div>
-                </form>
+                <div className='tools-title'>
+                    <span>文章列表</span>
+                </div>
+                <InputGroup size="sm">
+                    <Input />                
+                    <InputGroupButton><Button>Search</Button></InputGroupButton>
+                </InputGroup>
+
             </div>
         );
     }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Button  } from 'reactstrap';
+import { Link } from 'react-router';
 
 import { getPostList } from '../utils/request';    
 
@@ -21,6 +22,10 @@ class PostList extends Component {
             });
     }
 
+    handelEdit() {
+
+    }
+
     renderPost() {
         let {postList} = this.state;
         let idx = 0;
@@ -32,8 +37,8 @@ class PostList extends Component {
                     <td>{post.title}</td>
                     <td>{post.category}</td>
                     <td>
-                        <Button className='btn-primary-outline' color="primary" size="sm">编辑</Button>{' '}
-                        <Button className='btn-danger-outline' color="danger" size="sm">删除</Button>
+                        <Link to={`/edit/${post['_id']}`} className='btn btn-primary-outline btn-sm'>编辑</Link>
+                        <Link to={`/edit/${post['_id']}`} className='btn btn-danger-outline btn-sm'>删除</Link>
                     </td>
                 </tr>
             )

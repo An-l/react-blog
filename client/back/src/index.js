@@ -18,9 +18,10 @@ ReactDOM.render((
      <Router history={browserHistory}>
         <Route path='/' component={HomeLayout}>
             <IndexRoute component={HomePage} />
-            <Route path='/postList' component={PostList} />
-            <Route path='/categoryList' component={CategoryList} />
+            <Route path='/post' component={PostList} />
+            <Route path='/category' component={CategoryList} />
             <Route path='/edit' component={EditPage} />
+            <Route path='/edit/:id' component={EditPage} />
             <Route path='/setting' component={SettingPage} />
         </Route>
     </Router>

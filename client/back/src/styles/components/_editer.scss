@@ -1,109 +1,127 @@
-.RichEditor-root {
-  background: #fff;
-  // border: 1px solid #ddd;
-  font-family: 'microsoft yahei', serif;
-  font-size: 14px;
-  // padding: 15px 0;
-
-  .RichEditor-root :global(.public-DraftEditor-content) {
-		min-height: 140px;
-	}
-}
-
-.RichEditor-editor {
-  // border-top: 1px solid #ddd;
-//   cursor: text;
-  font-size: 18px;
-  padding: 0 20px;
-  height: 600px;
-  overflow: auto;
-  box-shadow: 0px 3px 16px 0px #c0c1c1;
-}
-
-.RichEditor-editor .public-DraftEditorPlaceholder-root,
-.RichEditor-editor .public-DraftEditor-content {
-  margin: 0 -15px -15px;
-  padding: 15px;
-}
-
-.RichEditor-editor .public-DraftEditor-content {
-  min-height: 100px;
-}
-
-.RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
-  display: none;
-}
-
-.RichEditor-editor .RichEditor-blockquote {
-  border-left: 5px solid #eee;
-  color: #666;
-  font-family: 'Hoefler Text', 'Georgia', serif;
-  font-style: italic;
-  margin: 16px 0;
-  padding: 10px 20px;
-}
-
-.RichEditor-editor .public-DraftStyleDefault-pre {
-  background-color: rgba(0, 0, 0, 0.05);
-  font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
-  font-size: 18px;
-  padding: 20px;
-}
-
-.RichEditor-controls {
-  font-size: 14px;
-  // margin-bottom: 5px;
-  user-select: none;
-  // background-color: #ecf0f1;
-  width: 100%;
-  height: 30px;
-  line-height: 30px;
-  overflow: hidden;
-
-  box-shadow: 0px 0px 6px 0px #c0c1c1;
-
-}
-
-// .RichEditor-styleButton {
-//   color: #999;
-//   cursor: pointer;
-//   margin: 0 10px;
-//   padding: 2px 0;
-//   display: inline-block;
-// }
-
-// .RichEditor-activeButton {
-//   color: #5890ff;
-// }
-
-.Inline-controls,
-.Block-controls {
-  float: left;
-  border-right: 1px solid rgba(220, 220, 220, 0.68);
-  
-}
-.Inline-controls {
-  margin-left: 6px;
-}
-
-.RichEditor-controls {
-
-	i {
-		display: inline-block;
-		cursor: pointer;
-  	margin: 0 10px;
-  	height: 30px;
-		line-height: 30px;
-		color: #717171;
-
-		&.active {
-			color: #00aaff;
+.myEditor {
+	a {
+		color: #0081FF;
+		&:hover {
+			color: #5aaeff;
 		}
-    }
-	
-}
+	}
 
-.draftJsToolbar__toolbar__dNtBH {
-    margin-left: -106px;
-    margin-top: -270px;
+	.md-menubar{
+		background: #fff;
+		border: 1px solid #ccc;
+		.md-toolbar,
+		.md-modebar {
+			padding-left: 0;
+			margin: 0;
+			width: 50%;
+			list-style: none;
+			overflow: hidden;
+			.tb-btn {
+				float: left;
+				&.spliter{
+					border-left: 1px solid #ccc;
+					margin: 4px 5px;
+					height: 24px;
+				}
+				a{
+					display: block;
+					padding: 4px 10px;
+					color: #333;
+					cursor: pointer;
+					&.active {
+						color:#0058ff;
+					}
+				}
+			}
+		}
+		.md-toolbar{
+			border-right: 1px solid #ccc;
+		}
+		
+		.md-toolbar {
+			float: left;
+		}
+		.md-modebar {
+			float: right;
+		}
+	}
+	
+	// 默认分屏模式
+	.md-editor {
+		border: 1px solid #ccc;
+		border-top: none;
+		height: 530px;
+
+		.md-area,
+		.md-shower{
+			float: left;
+			width: 50%;
+			height: 100%;
+			transition: all .5s ease-in;
+		}
+
+		.md-area {
+			border-right: 1px solid #ccc;
+		}
+		.md-shower {
+			// height: 530px;
+			overflow: auto;
+			background-color: #f3f3f3;
+		}
+
+		.md-content,
+		.md-shower {
+			padding: 10px 20px;
+		}
+		.md-content {
+			width: 100%;
+			height: 100%;
+			font-size: 18px;
+			resize: none;
+			border: none;
+			
+			&:focus {
+				outline: none;
+			}
+		}
+
+		/* 编辑模式 */
+		&.edit {
+			.md-area {
+				border-right: none;
+				width: 100%;
+			}
+			.md-shower {
+				width: 0;
+				height: 0;
+				padding: 0;
+			}
+		}
+		/* 预览模式 */
+		&.preview {
+			.md-area {
+				border-right: none;
+				width: 0;
+				height: 0;
+				padding: 0;
+			}
+			.md-shower {
+				width: 100%;
+			}
+		}
+	}
+	&.fullscreen {
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 99;
+		
+		background: #fff;
+
+		.md-editor {
+			min-height: 100%;
+		}
+	}	
 }

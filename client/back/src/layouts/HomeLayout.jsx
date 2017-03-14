@@ -16,10 +16,10 @@ class HomeLayout extends Component {
                     <section className='sidebar'>
                         <ul className='nav nav-pills nav-stacked nav-left'>
                             <li className="nav-item">
-                                <Link className='nav-link' to='/postList'><i className="iconfont icon-note"></i></Link>
+                                <Link className='nav-link' to='/post'><i className="iconfont icon-note"></i></Link>
                             </li>
                             <li className="nav-item">
-                                    <Link className='nav-link ' to='/categoryList'><i className="iconfont icon-regimentation"></i></Link>
+                                    <Link className='nav-link ' to='/category'><i className="iconfont icon-regimentation"></i></Link>
                             </li>
                             <li className="nav-item">
                                     <Link className='nav-link active' to='/edit'><i className="iconfont icon-write"></i></Link>
