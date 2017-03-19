@@ -4,22 +4,29 @@ import marked from 'marked';
 import hljs from 'highlight.js';
 import classnames from 'classnames';
 import 'highlight.js/styles/atom-one-light.css';
-
-var str="Heading\n=======\n\nSub-heading\n-----------\n \n### Another deeper heading\n \nParagraphs are separated\nby a blank line.\n\nLeave 2 spaces at the end of a line to do a  \nline break\n\nText attributes *italic*, **bold**, \n`monospace`, ~~strikethrough~~ .\n\nShopping list:\n\n  * apples\n  * oranges\n  * pears\n\nNumbered list:\n\n  1. apples\n  2. oranges\n  3. pears\n\nThe rain---not the reign---in\nSpain.\n\n *[Herman Fassett](https://freecodecamp.com/hermanfassett)*\n```javascript\nfunction(){\n  alert(hehe);\n}\n```"
+import { createPost, updatePostById } from '../utils/request';
 
 class markdownApp extends Component {
-   
 
     constructor(props) {
         super(props);
-       
+
+        let post = this.props.post;
         this.state = {
-            post: this.props.post,
-            content: this._convertor(this.props.post.markdownContent || '') || '',
-            markdownContent: this.props.post.markdownContent || '',
+            post: post,
+            title: post.title || '',
+            category: post.category || this.props.category[0].name || '',
+            tags: post.tags || [],
+            createdAt: post.createdAt || '',
+            updatedAt: post.updatedAt || '',
+            content: this._convertor(post.markdownContent || '') || '',
+            markdownContent: post.markdownContent || '',
+
             mode: 'split',
-            isFullScreen: false
+            isFullScreen: false,
+            isUpdate: this.props.isUpdate
         }
+        
     }
     
     componentDidMount() {
@@ -34,35 +41,90 @@ class markdownApp extends Component {
         this.showerDom = null;
     }
     
-    handleTextAreaChange(value) {
+    _handleTextAreaChange(value) {
         this.setState({
             content: this._convertor(value),
             markdownContent: value
         });
     }
+
+    _handleInputChange(type, e) {
+        let newState = {};
+        newState[type] = e.target.value;
+        this.setState(newState);
+    }
+
+    _handleSubmit(e) {
+        e.preventDefault();
+        let {post, title, category, tags, createdAt, updatedAt, content, markdownContent} = this.state;
+
+        let date = new Date();
+        let now = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate() + " " + 
+                date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        if (!createdAt) {
+            // 如果是第一次创建此文章
+            createdAt = now;
+        }
+        updatedAt = now;
+
+        let newPost = {
+            title,
+            category,
+            tags,
+            createdAt,
+            updatedAt,
+            content,
+            markdownContent
+        };
+
+        if (!this.state.isUpdate) {
+            createPost(newPost)
+                .then(res => {
+                    alert('发表文章成功！');
+                })
+        }else {
+            debugger
+            updatePostById(post['_id'], newPost)
+                .then(res => {
+                    alert('编辑文章成功！');
+                })
+        }
+    }
     
     render() {
-        let {post, content, isFullScreen, mode} = this.state;
+        let {title, category, tags, isFullScreen, mode} = this.state;
         const panelClass = classnames(['myEditor', {'fullscreen': isFullScreen}])
         const editorClass = classnames(['md-editor', mode]);
 
         return (
-            <Form className='edit-wrapper'>
+            <Form className='edit-wrapper'
+                name='editForm'
+                onSubmit={this._handleSubmit.bind(this)}>
                 <FormGroup row>
                     <Col sm={12}>
                         <Input type="text" name="title" placeholder="标题：我的标题咯" size="lg"
-                            value={post.title || ''} />
+                            name='title'
+                            value={title || ''}
+                            onChange={this._handleInputChange.bind(this,'title')}/>
                     </Col>
                 </FormGroup>
 
                 <FormGroup row>
                     <Col sm={3}>
-                         <Input type="select" name="select" className='category'>
-                            <option>{post.category || ''}</option>
+                         <Input type="select" name="select" className='category'
+                            name='category'
+                            value={category}
+                            onChange={this._handleInputChange.bind(this,'category')}>
+                            {
+                                this.props.category.map(item => <option key={item.name}>{item.name}</option>)
+                            }
                         </Input>
                     </Col>
                     <Col sm={9}>
-                        <Input type="text" name="tags" placeholder="标签" value={post.tags || ''}/>
+                        <Input type="text" name="tags" placeholder="标签"
+                            name='tags'
+                            value={tags || []}
+                            onChange={this._handleInputChange.bind(this,'tags')}/>
                     </Col>
                 </FormGroup>
 
@@ -86,7 +148,7 @@ class markdownApp extends Component {
                 <FormGroup check row>
                     <Col sm={2} className='col-md-offset-5'>
                         <Button className='btn-primary-outline' color="primary" size='lg' block
-                            onSubmit={(e) => this.handleSubmit(e)}>
+                            >
                             Submit
                         </Button>
                     </Col>
@@ -150,8 +212,9 @@ class markdownApp extends Component {
             <section className='md-area' >
                 <textarea className='md-content' 
                     placeholder="请输入markdown文本"
+                    name='markdownContent'
                     ref='editor'
-                    onChange={(e) => {this.handleTextAreaChange(e.target.value)}} 
+                    onChange={(e) => {this._handleTextAreaChange(e.target.value)}} 
                     value={this.state.markdownContent || ''}>
                 </textarea>
             </section>

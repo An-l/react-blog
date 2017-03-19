@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { dropdown } from '../utils/bootstrap/dropdown';
+import '../utils/bootstrap/dropdown';
 
 class NavbarC extends Component {
   constructor(props) {
@@ -22,7 +22,9 @@ class NavbarC extends Component {
     return (
       <div>
         <Navbar light>
-            <NavbarBrand href="/">Admin</NavbarBrand>
+            <NavbarBrand href="/">
+                -
+            </NavbarBrand>
             <Nav className="nav pull-right" navbar>
                 <NavItem>
                   <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}  size="sm">

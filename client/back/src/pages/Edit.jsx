@@ -1,31 +1,57 @@
 import React, { Component } from 'react';
-import { getPostById } from '../utils/request';
+import { getPostById, getCategory } from '../utils/request';
 import Editor from '../components/Editor-mde.jsx';
-
+import Tools from '../components/Tools.jsx';
 
 class Edit extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             post: {},
-            loadEnd: false
+            category: [],
+            isUpdate: false, 
+            loadEnd: 0
         }
+        
     }
     
     componentDidMount() {
-        let id = this.props.params.id;
-        getPostById(id)
+        let id = this.props.params.id || ''; 
+        id && this.setState({isUpdate: true}); //如果存在id则说明在编辑文章状态，
+        // 获取分类数组
+        getCategory()
+            .then(res => {
+                this.setState({
+                    category: res,
+                    loadEnd: this.state.loadEnd+1
+                });
+            });
+
+        // 如果在编辑文章状态，获取文章对象
+        id && getPostById(id)
             .then(res => {
                 this.setState({
                     post: res,
-                    loadEnd: true
+                    loadEnd: this.state.loadEnd+1
                 });
             });
+    }
+    renderEditor() {
+        return (
+            !this.state.isUpdate ? this.state.loadEnd === 1 && <Editor post={this.state.post} category={this.state.category} isUpdate={this.state.isUpdate}/>
+                                : this.state.loadEnd === 2 && <Editor post={this.state.post} category={this.state.category} isUpdate={this.state.isUpdate}/>
+        );
     }
 
     render() {   
         return (
-            this.state.loadEnd && <Editor post={this.state.post}/>
+            <div>
+                <Tools title='写文章'/>
+                <div className='content-wrapper'>
+                    {this.renderEditor()}
+                </div>
+            </div>
         );
     }
 }

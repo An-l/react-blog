@@ -1,7 +1,12 @@
-
 export default function request (method, url, body) {
     method = method.toUpperCase();
     url = 'http://127.0.0.1:3000/api/' + url;
+
+    let headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': sessionStorage.getItem('blog-token') || ''
+    };
 
     if (method === 'GET') {
         // fetch的GET不允许有body，参数只能放在url中
@@ -9,11 +14,17 @@ export default function request (method, url, body) {
     } else {
         body = body && JSON.stringify(body);
     }
+    
 
     return fetch(url, {
-        method
+        method,
+        headers,
+        body
         })
-        .then(res => res.json());
+        .then(res => {
+
+            return res.json()
+        }, err => console.warn('连接不上服务器：' + err));
 }
 
 export const getPostList = () => {
@@ -48,5 +59,41 @@ export const getPostByPage = ( pageNum=0, currentPage=1, limit=2 ) => {
 
 export const getCategory = () => {
     let url = 'category';
+    return request('GET', url)
+};
+
+export const createPost = (body) => {
+    let url = 'post';
+    return request('POST', url, body)
+};
+export const createCategory = (body) => {
+    let url = 'category';
+    return request('POST', url, body)
+};
+export const updatePostById = (id, body) => {
+    let url = `post/${id}`;
+    return request('PATCH', url, body)
+};
+export const updateCategoryById = (id, body) => {
+    let url = `category/${id}`;
+    return request('PATCH', url, body)
+};
+
+export const deletePostById = (id) => {
+    let url = `post/${id}`;
+    return request('DELETE', url)
+};
+export const deleteCategoryById = (id) => {
+    let url = `category/${id}`;
+    return request('DELETE', url)
+};
+
+export const login = (body) => {
+    let url = `admin/login`;
+    return request('POST', url, body)
+};
+
+export const logout = () => {
+    let url = `admin/logout`;
     return request('GET', url)
 };

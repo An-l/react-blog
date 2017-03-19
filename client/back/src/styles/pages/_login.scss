@@ -1,0 +1,22 @@
+.login {
+    padding: 20px;
+    background-color: #ecf0f1;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    border-radius: 15px;
+    -webkit-box-shadow: 0 0 0 2px rgba(0,0,0,0.04);
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.3);
+    margin: 10% auto;
+    width: 300px;
+
+    .icon-psyduck {
+       width: 3em; 
+       height: 3em;
+       vertical-align: middle;
+       fill: currentColor;
+       overflow: hidden;
+    }
+}

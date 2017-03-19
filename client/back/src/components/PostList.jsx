@@ -1,35 +1,16 @@
 import React, { Component } from 'react';
 import { Table, Button  } from 'reactstrap';
+// import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import Modal from '../components/Modal.jsx';
 import { Link } from 'react-router';
 
-import { getPostList } from '../utils/request';    
-
 class PostList extends Component {
-    constructor (props) {
-        super(props);
-
-        this.state = {
-            postList:[]
-        };
-    }
-
-    componentWillMount() {
-        getPostList()
-            .then(res => {
-                this.setState({
-                    postList: res
-                });
-            });
-    }
-
-    handelEdit() {
-
-    }
-
+ 
     renderPost() {
-        let {postList} = this.state;
+        let {postList, toggle} = this.props;
+
         let idx = 0;
-        return postList.map(post => {
+        return postList && postList.map(post => {
             idx++;
             return (
                  <tr key={idx}>
@@ -37,8 +18,8 @@ class PostList extends Component {
                     <td>{post.title}</td>
                     <td>{post.category}</td>
                     <td>
-                        <Link to={`/edit/${post['_id']}`} className='btn btn-primary-outline btn-sm'>编辑</Link>
-                        <Link to={`/edit/${post['_id']}`} className='btn btn-danger-outline btn-sm'>删除</Link>
+                        <Link to={`/manage/edit/${post['_id']}`} className='btn btn-primary-outline btn-sm'>编辑</Link>
+                        <Link onClick={() => toggle((post))} className='btn btn-danger-outline btn-sm'>删除</Link>   
                     </td>
                 </tr>
             )
@@ -46,20 +27,26 @@ class PostList extends Component {
     }
 
     render() {
+        let {postList, modal, toggle, handelDelete} = this.props;
+
         return (
-            <Table hover>
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>文章名</th>
-                    <th>分类</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                {this.renderPost()}
-                </tbody>
-            </Table>
+            <div className='table-wrapper'> 
+                <Table hover>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>文章名</th>
+                        <th>分类</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {this.renderPost()}
+                    </tbody>
+                </Table>
+                
+                <Modal modal={modal} toggle={toggle} handelDelete={handelDelete}/>
+            </div>
         );
     }
 }

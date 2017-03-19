@@ -4,11 +4,13 @@ const cors = require('kcors'); //koa跨域中间件
 const log = require('./utils/log');
 const bodyParser = require('koa-bodyparser');
 const koaRouter = require('koa-router');
-const models = require('./models/db'); // mongodb的models
-const koa2RestMongoose = require('./mongo_rest/index');
-const { permission } = require('./routes/admin');
-const config = require('./conf/config'); // 设置文件
 const restc = require('restc');
+const models = require('./models/db'); // mongodb的models
+const redisClient = require('./models/redis');
+const { login, logout, permission } = require('./routes/admin');
+const tokenService = require('./service/token');
+const koa2RestMongoose = require('./mongo_rest/index');
+const config = require('./conf/config'); // 设置文件
 
 
 const app = new Koa();
@@ -28,6 +30,10 @@ app.use(async (ctx, next) => {
     const ms = new Date() - start;
     log.info(`${ctx.method} ${decodeURIComponent(ctx.url)} - ${ms}ms`);
 });
+
+// 路由
+router.post('/api/admin/login', login);
+router.get('/api/admin/logout', logout);
 
 // 调用mongo_reset
 Object.keys(models).forEach(value => {

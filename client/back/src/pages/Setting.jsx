@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import Tools from '../components/Tools.jsx';
 
 class Setting extends Component {
-    render() {
+
+    renderSetingForm() {
         return (
             <Form className='form-setting'>
                 <FormGroup>
@@ -44,6 +46,18 @@ class Setting extends Component {
                     </Col>
                 </FormGroup>
             </Form>
+        )
+    }
+    
+    render() {
+        return (
+            <div>
+                <Tools title='设置'/>
+                <div className='content-wrapper'>
+                    {this.renderSetingForm()}
+                </div>
+            </div>
+            
         );
     }
 }

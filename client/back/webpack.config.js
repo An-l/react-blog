@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: [
-        'webpack-dev-server/client?http://localhost:8080',
+        // 'webpack-dev-server/client?http://localhost:8080',
         // bundle the client for webpack-dev-server
         // and connect to the provided endpoint
 
@@ -84,11 +84,15 @@ module.exports = {
 
         new webpack.NamedModulesPlugin(),
         // prints more readable module names in the browser console on HMR updates
+        new webpack.ProvidePlugin({
+           $: "jquery",
+           jQuery: "jquery"
+       })
     ],
 
     // 将html中引用的jq对象设置为全局模块
     // 之后可以这样使用 import $ from 'jquery';
-    externals: {
-        jquery: 'window.jQuery'
-    }
+    // externals: {
+    //     jquery: 'window.jQuery'
+    // }
 };

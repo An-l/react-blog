@@ -31,16 +31,6 @@ ReactDOM.render((
             <Route path='/about' component={AboutPage} />
         </Route>
     </Router>
-    // <Router history={hashHistory}>
-    //     <Route path='/' component={HomeLayout}>
-    //         <IndexRoute component={HomePage} />
-    //         <Route path='/post/:id' component={PostPage} />
-    //         <Route path='/tag' component={TagsPage} />
-    //         <Route path='/tag/:name' component={TagPage} />
-    //         <Route path='/about' component={AboutPage} />
-    //         {/* <Route path='/user/edit/:id' component={UserEditPage} /> */}
-    //     </Route>
-    // </Router>
     ),
     document.getElementById('root')
 )

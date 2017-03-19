@@ -26,7 +26,7 @@
 
   // When fading in the modal, animate it to slide down
   &.fade .modal-dialog {
-    transform: translate(0, -25%);
+    transform: translate(0, 50%);
     transition: transform .3s ease-out;
   }
   &.in .modal-dialog { transform: translate(0, 0); }
@@ -130,8 +130,8 @@
 @include media-breakpoint-up(sm) {
   // Automatically set modal's width for larger viewports
   .modal-dialog {
-    width: $modal-md;
-    margin: 30px auto;
+    width: 250px;
+    margin: 250px auto;
   }
   .modal-content {
     @include box-shadow(0 5px 15px rgba(0,0,0,.5));
@@ -143,4 +143,8 @@
 
 @include media-breakpoint-up(md) {
   .modal-lg { width: $modal-lg; }
+}
+
+.show {
+  opacity: 1;
 }

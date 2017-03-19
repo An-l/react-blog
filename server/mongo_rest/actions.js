@@ -1,4 +1,5 @@
 const tag = require('../models/db').tag;
+const log = require('../utils/log');
 // 对models/db.js中发布的mongoose模型进行添加方法
 module.exports = function generateActions(model) {
     return {
@@ -84,7 +85,7 @@ module.exports = function generateActions(model) {
                     builder = builder.select(select);
                 }
                 result = await builder.exec();
-
+                
                 return ctx.body = result;
             } catch (_error) {
                 error = _error;
@@ -97,7 +98,7 @@ module.exports = function generateActions(model) {
              let error, result;
 
               try {
-                result = await model.findByIdAndRemove(ctx.params.id).exec();
+                result = await model.findByIdAndRemove(ctx.params.id);
                 return ctx.body = result;
             } catch (_error) {
                 error = _error;
@@ -112,7 +113,7 @@ module.exports = function generateActions(model) {
 
               try {
                 // 1.根据id对已存在数据进行删除
-                await model.findByIdAndRemove(ctx.params.id).exec();
+                await model.findByIdAndRemove(ctx.params.id);
                 // 2.保持之前的id不变，将新的数据插入数据库
                 newDocument = ctx.request.body;
                 newDocument._id = ctx.params.id;
@@ -129,9 +130,11 @@ module.exports = function generateActions(model) {
          // :id为查询到的文档的_id属性, Body中为用来更新该文档的JSON数据
         updateById: async function (ctx, next) {
              let error, result;
-
+             
               try {
-                result = await model.findByIdAndUpdate(ctx.params.id).exec();
+                result = await model.findByIdAndUpdate(ctx.params.id, ctx.request.body).exec();
+                console.log(result);
+                ctx.status = 200; // 201 "created"
                 return ctx.body = result;
             } catch (_error) {
                 error = _error;
@@ -142,9 +145,10 @@ module.exports = function generateActions(model) {
         // POST /proxyPrefix/api/:modelName
         create: async function (ctx, next) {
              let error, result;
-
+             
               try {
-                result = await model.create(ctx.request.body).exec();
+                result = await model.create(ctx.request.body);
+               
                 ctx.status = 201; // 201 "created"
                 return ctx.body = result;
             } catch (_error) {
@@ -152,7 +156,5 @@ module.exports = function generateActions(model) {
                 return ctx.body = error;
             }
         }
-
-
     }
 }
