@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import { Link } from 'react-router';
+import SearchBox from '../components/SearchBox.jsx';    
 
 class NavBar extends React.Component {
 
@@ -7,7 +8,7 @@ class NavBar extends React.Component {
         return (
             <nav className='navbar'>
                 <h1>An-l的小站</h1>
-                <ul className='nav'>
+                <ul className='main-nav'>
                     <li>
                         <Link to="/" title="首页">
                             <i className="iconfont icon-home"></i>
@@ -21,9 +22,9 @@ class NavBar extends React.Component {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/tag" title="标签">
-                            <i className="iconfont icon-tags"></i>
-                            <span className='text'>标签</span>
+                        <Link to="/category" title="分类">
+                            <i className="iconfont icon-category"></i>
+                            <span className='text'>分类</span>
                         </Link>
                     </li>
                     <li>
@@ -34,19 +35,18 @@ class NavBar extends React.Component {
                     </li>
                 </ul>
                 <div className='sider-nav'>
-                        <a rel="nofollow" target="_blank" href="https://github.com/An-l">
-                            <i title="GitHub" className="iconfont icon-github"></i>
+                        <a title="GitHub" target="_blank" href="https://github.com/An-l">
+                            <i className="iconfont icon-github"></i>
                         </a>
-                        <a rel="nofollow" target="_blank" href="http://weibo.com/annnl">
-                            <i title="Weibo" className="iconfont icon-zliconweibo01"></i>
+                        <a title="Weibo" target="_blank" href="http://weibo.com/annnl">
+                            <i className="iconfont icon-zliconweibo01"></i>
                         </a>
-                        <a href="/rss.xml">
-                            <i title="RSS" className="iconfont icon-rss"></i>
+                        <a title="RSS" target="_blank" href="/rss.xml">
+                            <i className="iconfont icon-rss"></i>
                         </a>
-                        <a target="_blank" href="https://www.google.com/webhp#newwindow=1&amp;safe=strict&amp;q=site:http://an-l.cn">
-                            <i title="Search" className="iconfont icon-search"></i>
-                        </a>
+                        
                 </div>
+                <SearchBox />
             </nav>
         )
     }

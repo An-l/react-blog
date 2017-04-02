@@ -46,7 +46,8 @@ class Category extends Component {
         let newCategory = {
             name: this.state.addCategory
         };
-        createCategory(newCategory);
+        createCategory(newCategory).then(res => newCategory['_id']=res['_id']);
+
         let newcategoryList = this.state.categoryList;
         newcategoryList.push(newCategory);
         this.setState({
@@ -105,13 +106,13 @@ class Category extends Component {
                     <CategoryList 
                         categoryList={this.state.categoryList}
                         modal={this.state.modal} 
+                        addCategory={this.state.addCategory}
                         handelInputChange={this.handelInputChange}
                         handelAddInputChange={this.handelAddInputChange}
                         handelAddClick={this.handelAddClick} 
                         handelUpdate={this.handelUpdate}
                         handelDelete={this.handelDelete}
                         toggle={this.toggle}
-                        addCategory={this.addCategory}
                         />
                 </div>
             </div>

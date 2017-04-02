@@ -1,0 +1,47 @@
+@import "helpers/parameters";
+
+main>.category {
+    .category-list{
+        padding-bottom: 25px;
+        border-bottom: 1px dashed #ccc;
+
+        & > a {
+            display: inline-block;
+            border: 1px solid $color-a-default;
+            border-radius: 4px;
+            font-size: 14px;
+            height: 40px;
+            line-height: 40px;
+            margin: 0 15px 10px 0;
+            padding: 0 15px;
+
+             &:hover {
+                border: 1px solid $color-a-hover;
+            }
+
+            &.active {
+                color:$color-a-active;
+                border: 1px solid $color-a-active;
+            }
+        }
+    }
+    .archive-list{
+        padding-top: 30px;
+
+        li {
+            padding: 5px 0;
+        }
+
+        h3 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        .date {
+            margin-left: 10px;
+            color: #999;
+            font-size: 14px;
+            font-style:italic;
+        }
+        
+    }
+}

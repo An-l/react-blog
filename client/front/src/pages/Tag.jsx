@@ -15,7 +15,7 @@ class Tag extends Component {
     }
 
     
-    componentWillMount() {
+    componentDidMount() {
         let tagName = this.props.params.name;
 
         getPostByTag(tagName)

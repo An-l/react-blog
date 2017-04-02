@@ -20,7 +20,7 @@ class Home extends Component {
         this.handlePrev = this.handlePrev.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         countPost()
             .then(res => {
                 let pageNum = Math.ceil(res/this.state.limit); 
@@ -31,6 +31,8 @@ class Home extends Component {
     pageQuery(newPageNum=0, currentPage) {
         // 如果不传入currentPage参数，说明是在页面加载时调用此方法，设置currentPage = url中的page参数
         currentPage = currentPage ? currentPage : parseInt(this.props.location.query.page);
+        // 如果url中的page参数大于总页数，则加载第一页
+        currentPage = currentPage > newPageNum ? 1 : currentPage;
         // 经过上面的处理，如果currentPage依然不存在，则默认加载第一页
         currentPage = currentPage ? currentPage : 1;
 
@@ -77,7 +79,7 @@ class Home extends Component {
         const {pageNum, currentPage, postList} = this.state;
 
         return (
-            <section>
+            <section className='home'>
                 <PostList postList={postList} />
                 <Pagination 
                     currentPage={currentPage}

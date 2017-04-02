@@ -7,7 +7,7 @@ module.exports = function generateActions(model) {
         /**
          * 对models/db.js中发布的mongoose模型进行添加方法
          * 
-         * 提供关键字：conditions,select,count,sort,skip,limit
+         * 提供关键字：conditions, like, select, count, sort, skip, limit
          * 查询所有文档  GET /proxyPrefix/api/post
          * 查询title字段为'关于'的文档  GET /proxyPrefix/api/post?conditions={"title":"关于"}
          * 查询指定id的文档的上一篇文档  GET /proxyPrefix/api/post/?conditions={"_id":{"$lt":"580b3ff504f59b4cc27845f0"}}&sort=1&limit=1
@@ -22,13 +22,20 @@ module.exports = function generateActions(model) {
         findAll: async function(ctx, next) {
             let error, result;
             try {
-                let conditions = {}, //条件
+                let conditions = {}, // 条件
+                    like = {}, // 模糊查询
                     select = {}; // 过滤，在条件基础上进行过滤
 
                 let query = ctx.request.query;
                 if (query.conditions) {
                     // 如果请求中包含conditions字段
                     conditions = JSON.parse(query.conditions);
+                }
+
+                if (query.like) {
+                    let title = JSON.parse(query.like)['title'];
+                    like['title'] = new RegExp(title, 'i');
+                    conditions = like;
                 }
 
                 // 根据传入的model(post,user,tag,category),

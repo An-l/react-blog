@@ -18,7 +18,7 @@ class PostList extends Component {
                     <td>{post.title}</td>
                     <td>{post.category}</td>
                     <td>
-                        <Link to={`/manage/edit/${post['_id']}`} className='btn btn-primary-outline btn-sm'>编辑</Link>
+                        <Link to={`/admin/manage/edit/${post['_id']}`} className='btn btn-primary-outline btn-sm'>编辑</Link>
                         <Link onClick={() => toggle((post))} className='btn btn-danger-outline btn-sm'>删除</Link>   
                     </td>
                 </tr>

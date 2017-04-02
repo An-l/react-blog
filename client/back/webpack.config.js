@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: [
-        // 'webpack-dev-server/client?http://localhost:8080',
+        'webpack-dev-server/client?http://localhost:8080',
         // bundle the client for webpack-dev-server
         // and connect to the provided endpoint
 

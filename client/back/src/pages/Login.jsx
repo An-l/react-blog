@@ -30,6 +30,7 @@ class Login extends Component {
             name: this.state.name,
             password: this.state.password
         };
+        
         login(body)
             .then(res => {
                  this._verifyLogin(res);
@@ -45,6 +46,9 @@ class Login extends Component {
                 let token = res.token;
                 sessionStorage.setItem('blog-token', token);
                 browserHistory.push('/admin/manage');
+                break;
+            default:
+                alert('连接服务器失败！');
                 break;
         }
     }

@@ -13,6 +13,9 @@ class Sidebar extends Component {
         }
         this.handleLogout = this.handleLogout.bind(this);
     }
+    // componentWillReceiveProps(nextProps) {
+    //     debugger
+    // }
     
     handleChange(item) {
         this.setState({
@@ -28,6 +31,7 @@ class Sidebar extends Component {
                     browserHistory.push('/admin');
                 }else {
                     alert('注销失败！');
+                    browserHistory.push('/admin');
                 }
             })
     }

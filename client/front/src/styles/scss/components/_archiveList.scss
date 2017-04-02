@@ -1,0 +1,22 @@
+.archive-item {
+    padding: 10px 15px;
+
+    .archive-year {
+        font-size: 1.2em;
+    }
+    &:first-child {
+        padding-top: 0;
+    }
+
+        li {
+        padding: 5px 0;
+    }
+
+    .post-info {
+        margin-left: 10px;
+        color: #999;
+        font-size: 15px;
+        // font-style:italic;
+    }
+    
+}

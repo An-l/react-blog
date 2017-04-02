@@ -51,6 +51,12 @@ class markdownApp extends Component {
     _handleInputChange(type, e) {
         let newState = {};
         newState[type] = e.target.value;
+        // 如果输入的是tags，根据','分割成数组
+        if (type === 'tags') {
+            let tags = e.target.value.split(',');
+            newState['tags'] = tags;
+        }
+        
         this.setState(newState);
     }
 
@@ -80,15 +86,20 @@ class markdownApp extends Component {
         if (!this.state.isUpdate) {
             createPost(newPost)
                 .then(res => {
-                    alert('发表文章成功！');
+                    this._verifyResult(res,'发表文章成功！')
                 })
         }else {
-            debugger
             updatePostById(post['_id'], newPost)
                 .then(res => {
-                    alert('编辑文章成功！');
+                    this._verifyResult(res,'编辑文章成功！')
                 })
         }
+    }
+    _verifyResult(res, successStr) {
+        if (res.status === 'fail') {
+            return alert(res.description);
+        }
+        alert(successStr);
     }
     
     render() {
@@ -121,7 +132,7 @@ class markdownApp extends Component {
                         </Input>
                     </Col>
                     <Col sm={9}>
-                        <Input type="text" name="tags" placeholder="标签"
+                        <Input type="text" name="tags" placeholder="标签，多个标签间用,分割"
                             name='tags'
                             value={tags || []}
                             onChange={this._handleInputChange.bind(this,'tags')}/>
@@ -147,9 +158,8 @@ class markdownApp extends Component {
 
                 <FormGroup check row>
                     <Col sm={2} className='col-md-offset-5'>
-                        <Button className='btn-primary-outline' color="primary" size='lg' block
-                            >
-                            Submit
+                        <Button className='btn-primary-outline' color="primary" size='lg' block>
+                            提交文章
                         </Button>
                     </Col>
                 </FormGroup>
@@ -214,7 +224,8 @@ class markdownApp extends Component {
                     placeholder="请输入markdown文本"
                     name='markdownContent'
                     ref='editor'
-                    onChange={(e) => {this._handleTextAreaChange(e.target.value)}} 
+                    onChange={(e) => {this._handleTextAreaChange(e.target.value)}}
+                    onKeyDown={(e) => {this._handleKeyDown(e)}}
                     value={this.state.markdownContent || ''}>
                 </textarea>
             </section>
@@ -297,6 +308,43 @@ class markdownApp extends Component {
             content: this._convertor(this.editorDom.value),
             markdownContent: this.editorDom.value
         });
+    }
+    _handleKeyDown(e) {
+        if (!e.ctrlKey) {
+            return;
+        }
+        switch (e.keyCode) {
+            case 66:
+                this._boldText();  //ctrl+b 加粗
+                break;
+           case 73:
+                this._italicText();  //ctrl+b 斜体
+                break;
+            case 76:
+                this._linkText();  //ctrl+b 链接
+                break;
+            case 81:
+                this._linkText();  //ctrl+l 链接
+                break;
+            case 65:
+                this._blockquoteText();  //ctrl+q 引用
+                break;
+            case 75:
+                this._codeText();  //ctrl+k 代码
+                break;
+            case 71:
+                this._pictureText();  //ctrl+g 图片
+                break;
+            case 79:
+                this._listOlText();  //ctrl+o  有序列表
+                break;
+            case 75:
+                this._listUlText();  //ctrl+u 无序列表
+                break;
+            case 72:
+                this._headerText();  //ctrl+h 标题
+                break;
+        }
     }
 
     _boldText() {

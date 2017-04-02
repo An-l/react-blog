@@ -1,3 +1,5 @@
+@import "bootstrap/bootstrap";
+
 @import "global";
 
 // Helpers
@@ -7,7 +9,10 @@
 
 @import "components/nav";
 @import "components/postList";
+@import "components/archiveList";
 @import "components/pagination";
+@import "components/animations";
+@import "components/tools";
 
 
 // Pages
@@ -15,6 +20,7 @@
 @import "pages/post";
 @import "pages/archive";
 @import "pages/tags";
+@import "pages/category";
 
 // Layout
 @import "layouts/responsive";

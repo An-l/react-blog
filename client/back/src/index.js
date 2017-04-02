@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router, Route, IndexRoute, Redirect, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, Redirect, browserHistory, hashHistory } from 'react-router';
 import jQuery from 'jquery'
 
 import bootstrap from './styles/bootstrap/bootstrap.scss';
@@ -17,7 +17,7 @@ import ErrorPage from './pages/Error.jsx'
 
 
 ReactDOM.render((
-     <Router history={browserHistory}>
+     <Router history={hashHistory}>
         <Route path='admin' >
             <IndexRoute component={LoginPage}/>
             <Route path='manage' component={HomeLayout} onEnter={requireCredentials}>

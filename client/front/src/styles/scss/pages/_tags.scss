@@ -1,15 +1,28 @@
 @import "helpers/parameters";
 
 main>.tags {
-    a {
-        display: inline-block;
-        border: 1px solid $color-a-default;
-        border-radius: 4px;
-        color: $color-a-default;
-        font-size: 14px;
-        height: 40px;
-        line-height: 40px;
-        margin: 0 15px 10px 0;
-        padding: 0 15px;
+    .tags-content {
+       padding-bottom: 25px;
+        border-bottom: 1px dashed #ccc;
+
+        & > a {
+            display: inline-block;
+            border: 1px solid $color-a-default;
+            border-radius: 4px;
+            font-size: 14px;
+            height: 40px;
+            line-height: 40px;
+            margin: 0 15px 10px 0;
+            padding: 0 15px;
+
+             &:hover {
+                border: 1px solid $color-a-hover;
+            }
+
+            &.active {
+                color:$color-a-active;
+                border: 1px solid $color-a-active;
+            }
+        }
     }
 }

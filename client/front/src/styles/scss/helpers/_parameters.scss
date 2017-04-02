@@ -1,8 +1,10 @@
 // Colors
 $color-default: #666;
-$color-a-default: #2479cc;
-$color-title-default: #333;
-$color-title-hover: #2479cc;
+// $color-a-default: #007EA7;
+$color-a-default: #00A8E8;
+// $color-a-hover: #00A8E8;
+$color-a-hover: #007EA7;
+$color-a-active: #00171F;
 $color-code:#2479cc;
 $color-code-backgroud:#f2f2f2;
 $color-border-default: #ddd;
@@ -10,6 +12,10 @@ $color-border-default: #ddd;
 $color-nav-default: #fff;
 $color-nav-backgroud:#222;
 
+$color-body-default: #fff;
+$color-title-default: #007EA7;
+$color-title-hover: #00A8E8;
+$color-p-default: #666;
 
 %post-meta {
     float: right;
@@ -20,7 +26,8 @@ $color-nav-backgroud:#222;
 
 %post-title {
     margin: 0;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
+    font-size: 1.7em;
 }
 
 // 响应式变量

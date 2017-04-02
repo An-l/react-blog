@@ -1,30 +1,67 @@
 @import "helpers/parameters";
 
 .post-list{
-    margin-top: -30px;
-    
-
+   
     .post-item {
         padding: 30px 0;
         border-bottom: 1px solid $color-border-default;
         border-top: 1px solid #fff;
+
+        &:first-child{
+            padding-top: 0;
+        }
         
         &-title{
             @extend %post-title;
-            color: $color-title-default;
+            a {
+                color: $color-title-default;
+            }
+            &:hover a{
+                color: $color-title-hover;
+            }
         }
 
         &-meta {
             @extend %post-meta;
         }
+
+        &-category {
+            font-size: .9em;
+
+            display: inline-block;
+            border: 1px dashed $color-a-default;
+            border-radius: 4px;
+            font-size: 14px;
+            // height: 40px;
+            // line-height: 40px;
+            // margin: 0 15px 10px 0;
+            margin-bottom: 15px;
+            padding: 2px;
+            color: $color-a-default;
+
+             &:hover {
+                border: 1px solid $color-a-hover;
+            }
+        }
         
         &-summary {
             font-size: 16px;
             line-height: 1.8;
+            color: $color-p-default;
+            h1,
+            h2 {
+                font-size: 1.5em;
+            }
         }
 
         &:last-child {
             border: none;
+        }
+    }
+
+    .post-null {
+        h3 {
+            font-size: 1.3em;
         }
     }
 }

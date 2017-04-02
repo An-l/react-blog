@@ -37,6 +37,14 @@ class Edit extends Component {
                 });
             });
     }
+
+    //  componentDidUpdate (prevProps) {
+    //     // 上面步骤3，通过参数更新数据
+    //     let oldId = prevProps.params.invoiceId
+    //     let newId = this.props.params.invoiceId
+    //     debugger
+    // }
+
     renderEditor() {
         return (
             !this.state.isUpdate ? this.state.loadEnd === 1 && <Editor post={this.state.post} category={this.state.category} isUpdate={this.state.isUpdate}/>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import ArchiveList from '../components/ArchiveList.jsx';
 import {getPostList} from '../utils/request';
 
 class Archive extends Component {
@@ -11,11 +12,19 @@ class Archive extends Component {
         }
     }
     
-    componentWillMount() {
+    componentDidMount() {
+        // getPostList()
+        //     .then(res => {
+        //         this.initTimeList(res);
+        //     })
+        this._getPostList();
+    }
+
+     _getPostList() {
         getPostList()
             .then(res => {
                 this.initTimeList(res);
-            })
+            });
     }
 
     initTimeList(postList) {
@@ -24,62 +33,24 @@ class Archive extends Component {
         postList.forEach(post => {
             let timeArr = post['createdAt'].split("-",2);
             let year = timeArr[0];
-            let mon = timeArr[1];
 
             if(!newTimeList[year]){
-                newTimeList[year] = {};
+                newTimeList[year] = [];
             }
-            if(!newTimeList[year][mon]){
-                newTimeList[year][mon] = [];
-            }
-            newTimeList[year][mon].push(post);
+            newTimeList[year].push(post);
         });
 
         this.setState({
             timeList: newTimeList
         });
-    }
-    
-    renderArchiveList () {
-        let {timeList} = this.state;
-        return (
-            Object.keys(timeList).map(year => {
-                return (
-                    Object.keys(timeList[year]).map(mon => {
-                        return (
-                            <div className='archive-item' key={mon}>
-                                <h3>{year}年{mon}月 ({timeList[year][mon].length})</h3>
-                                <ul>
-                                    {
-                                        timeList[year][mon].map(post => {
-                                            return (
-                                                <li key={post.title}>
-                                                    <Link to={`/post/${post['_id']}`} title={post.title}>
-                                                        {post.title}
-                                                    </Link>
-                                                    &nbsp;
-                                                    <span className='date'>{post.createdAt.slice(0,10)}</span>
-                                                </li>
-                                            )
-                                        })
-                                    }
-                                </ul>
-                            </div>
-                        )
-                    })
-                )
-            })
-        )
-    }
-    
+    }  
     
     render() {
         return (
             <section className='archive'>
                 <h2 className='title'>归档</h2>
-                {
-                    this.renderArchiveList()
-                }
+                <ArchiveList 
+                    timeList={this.state.timeList} />
             </section>
         );
     }

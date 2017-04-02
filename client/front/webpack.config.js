@@ -5,7 +5,7 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: [
-        'webpack-dev-server/client?http://localhost:8080',
+        'webpack-dev-server/client?http://localhost:80',
         // bundle the client for webpack-dev-server
         // and connect to the provided endpoint
 
@@ -37,7 +37,7 @@ module.exports = {
         contentBase: resolve(__dirname, 'dist'),
         // match the output path
 
-        port: 8080,
+        port: 80,
         // 设置默认监听端口，如果省略，默认为"8080"
 
         publicPath: '/'
