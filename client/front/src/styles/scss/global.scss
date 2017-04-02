@@ -27,23 +27,28 @@ a:active {
     padding-left: 290px;
     padding-right: 60px;
     max-width: 1390px;
+    overflow: hidden;
+    
+    .animation-wrap{
 
-    &>section {
-        padding-bottom: 30px;
+        section {
+            padding-bottom: 30px;
 
-        .title {
-            padding-top: 30px;
-            margin-bottom: 25px;
-            font-size: 2em;
-            line-height: 35px;
-            font-weight: 300;
-            color: $color-title-default;
+            .title {
+                padding-top: 30px;
+                margin-bottom: 25px;
+                font-size: 2em;
+                line-height: 35px;
+                font-weight: 300;
+                color: $color-title-default;
 
-            .tag-name {
-                color: $color-a-default;
+                .tag-name {
+                    color: $color-a-default;
+                }
             }
         }
     }
+    
 }
 
 .footer {
@@ -56,4 +61,41 @@ a:active {
     &>a {
         color:$color-a-default;
     }
+}
+
+
+
+// .page-appear {
+//     opacity: 0.01;
+//     // margin-left: 100%;
+//     -webkit-transition: all 1.5s ease 1.5s;
+//     transition: all 1.5s ease 1.5s;
+// }
+
+// .page-appear.page-appear-active {
+//     // margin-left: 0px;
+//     opacity: 1;
+// }
+
+.page-enter {
+    opacity: 0;
+    transform: translate(50%,0);
+    -webkit-transition: all 500ms ease-in;
+    transition: all 500ms ease-in;
+}
+
+.page-enter.page-enter-active {
+    transform: translate(0,0);
+    opacity: 1;
+}
+
+.page-leave {
+    opacity: 1;
+    transform: translate(0,0);
+}
+
+.page-leave.page-leave-active {
+    opacity: 0;
+    transform: translate(50%,0);
+    // transition: opacity 300ms ease-in;
 }

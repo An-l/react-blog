@@ -23,7 +23,7 @@ import AboutPage from './pages/About.jsx'
 import SearchPage from './pages/Search.jsx'
 
 ReactDOM.render((
-     <Router history={browserHistory}>
+     <Router history={browserHistory} onUpdate={() => window.scrollTo(0, 0)}>
         <Route path='/' component={HomeLayout}>
             <IndexRoute component={HomePage} />
             <Route path='/post/:id' component={PostPage} />

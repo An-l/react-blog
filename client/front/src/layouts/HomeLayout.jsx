@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import NavBar from '../components/NavBar.jsx';
+import ReactCSSTransitionGroup  from 'react-addons-css-transition-group';
 
 class HomeLayout extends Component {
     render() {
-        const {children} = this.props;
-        
         return (
             <div className='body'>
                 <header className='navbar-wrap'>
@@ -12,7 +11,16 @@ class HomeLayout extends Component {
                 </header>
                 <main className='main'>
                 
-                    {children}
+                   <ReactCSSTransitionGroup
+                        className='animation-wrap clearfix'
+                        component="div"
+                        transitionName="page"
+                        transitionEnterTimeout={500}
+                        transitionLeaveTimeout={500}>
+                        {React.cloneElement(this.props.children, {
+                            key: this.props.location.pathname
+                        })}
+                    </ReactCSSTransitionGroup>
                   
                     <footer className="footer">
                         © 2017&nbsp;-&nbsp; An-l的小站 &nbsp;-&nbsp;
