@@ -1,18 +1,45 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import marked from 'marked';
 import hljs from 'highlight.js';
 import classnames from 'classnames';
-import 'highlight.js/styles/atom-one-light.css';
+
 import { createPost, updatePostById } from '../utils/request';
 
 class markdownApp extends Component {
+    static propTypes = {
+        post: PropTypes.object,
+        category: PropTypes.array,
+        isUpdate: PropTypes.bool
+    }
 
     constructor(props) {
         super(props);
 
         let post = this.props.post;
         this.state = {
+            post: post,
+            title: '',
+            category: '',
+            tags: [],
+            createdAt: '',
+            updatedAt:'',
+            content: '',
+            markdownContent: '',
+
+            mode: 'split',
+            isFullScreen: false,
+            isUpdate: false
+        }
+        
+        this.handleInputChange = this.handleInputChange.bind(this);
+    }
+
+    componentDidMount() {
+        this.input.focus();
+
+        const post = this.props.post;
+        this.setState({
             post: post,
             title: post.title || '',
             category: post.category || this.props.category[0].name || '',
@@ -22,37 +49,143 @@ class markdownApp extends Component {
             content: this._convertor(post.markdownContent || '') || '',
             markdownContent: post.markdownContent || '',
 
-            mode: 'split',
-            isFullScreen: false,
             isUpdate: this.props.isUpdate
+        });
+    }
+
+    
+    // content string → [string|null] 生成目录
+    _createToc(content){
+        if (typeof content !== 'string') {
+            return null;
         }
         
+        var div = document.createElement("div");
+        div.innerHTML = content;
+
+        let tocArr = div.getElementsByClassName('toc');
+        
+
+        let h2Ul = document.createElement("ul"),
+            h3Ul = document.createElement("ul");
+
+        for (let i = 0; i < tocArr.length; i++) {
+
+            let h = tocArr[i];
+
+            // 生成 <li><a href='xxx'></a></li>
+            let li = document.createElement("li");
+            let a = document.createElement("a");
+            a.setAttribute('href', '#' + h.textContent.replace(/\s/g,''));
+            a.innerHTML = h.textContent;
+            li.appendChild(a);
+
+            if (h.nodeName === 'H2') {
+                // 如果当前元素是h2，直接插入h2Ul中
+                h2Ul.appendChild(li)
+            } else if (h.nodeName === 'H3') {
+                // 如果当前元素是h3
+                if (tocArr[i-1] && tocArr[i-1].nodeName === 'H2') { 
+                    //如果上一个元素是h2，新建一个h3Ul，并将h3Ul插入到h2Ul中
+                    h3Ul = document.createElement("ul");
+                    h3Ul.appendChild(li);
+                    h2Ul.lastChild.appendChild(h3Ul);
+                }else {
+                    //如果上一个元素是h3，将生成的li直接插入之前的h3Ul中
+                    h3Ul.appendChild(li);
+                }
+            }
+        }
+
+        // let tocObj = {};
+        // let countH2 = 0;
+        // let countH3 = 0;
+        // for (let i = 0; i < tocArr.length; i++) {
+        //     let h = tocArr[i];
+        //     if (h.nodeName === 'H2') {
+        //         if (!tocObj[countH2]) {
+        //             tocObj[countH2] = {};
+        //         }
+        //         tocObj[countH2].content = h.textContent;
+        //         countH2++;
+        //     } else if (h.nodeName === 'H3') {
+        //         let tocH2 = tocObj[countH2 - 1];
+        //         if (!tocH2['subToc']) {
+        //             tocH2['subToc'] = {};
+        //         }
+        //         tocH2['subToc'][countH3] = {};
+        //         tocH2['subToc'][countH3].content = h.textContent;
+
+        //         if (tocArr[i+1] && tocArr[i+1].nodeName === 'H2') {
+        //             countH3 = 0;
+        //         }else {
+        //             countH3++;
+        //         }
+        //     } 
+        // }
+        
+        return h2Ul.outerHTML;
     }
-    
-    componentDidMount() {
-        // 缓存dom节点
-        this.editorDom = this.refs.editor;
-        // debugger
-        this.showerDom = this.refs.shower;
+
+    _verifyResult(res, Str) {
+        if (!res) {
+            return alert(Str + '失败！');
+        }
+        alert(Str + '成功！');
     }
-    componentWillUnmount() {
-        // 清空缓存的dom节点
-        this.editorDom = null;
-        this.showerDom = null;
+
+    // 设置marked插件属性，以及highlight方式
+    _convertor(markdownContent) {
+        let rendererMD = new marked.Renderer();
+        marked.setOptions({
+            renderer: rendererMD,
+            highlight: function (code) {
+                return hljs.highlightAuto(code).value;
+            },
+            gfm: true, //允许 Git Hub标准的markdown.
+            tables: true, //允许支持表格语法
+            breaks: true, //允许回车换行。该选项要求 gfm 为true。
+            pedantic: false, //不纠正原始模型任何的不良行为和错误
+            sanitize: false, //对输出进行过滤（清理），将忽略任何已经输入的html代码（标签）
+            smartLists: true, //使用比原生markdown更时髦的列表。
+            smartypants: false //使用更为时髦的标点，比如在引用语法中加入破折号。 
+        });
+
+        rendererMD.heading = (text, level) => {
+            return `<h${level} id=${text.replace(/\s/g,'')} class=toc>${text}</h${level}>`;
+        }
+
+        return marked(markdownContent);
     }
-    
-    _handleTextAreaChange(value) {
+
+    // 改变显示的模式
+    _changeMode(mode) {
+        return (e) => {
+            this.setState({
+                mode: mode
+            });
+        }
+    }
+    // 是否全屏显示
+    _toggleFullScreen() {
+        this.setState({
+            isFullScreen: !this.state.isFullScreen
+        });
+    }
+
+
+    handleTextAreaChange(value) {
         this.setState({
             content: this._convertor(value),
             markdownContent: value
         });
     }
 
-    _handleInputChange(type, e) {
+    handleInputChange(e) {
         let newState = {};
-        newState[type] = e.target.value;
+        newState[e.target.name] = e.target.value;
         // 如果输入的是tags，根据','分割成数组
-        if (type === 'tags') {
+        if (e.target.name === 'tags') {
             let tags = e.target.value.split(',');
             newState['tags'] = tags;
         }
@@ -60,18 +193,70 @@ class markdownApp extends Component {
         this.setState(newState);
     }
 
-    _handleSubmit(e) {
+    // 设置快捷键
+    handleKeyDown(e) {
+        if (!e.ctrlKey) {
+            return;
+        }
+        switch (e.keyCode) {
+            case 66:
+                this._boldText();  //ctrl+b 加粗
+                break;
+           case 73:
+                this._italicText();  //ctrl+i 斜体
+                break;
+            case 76:
+                this._linkText();  //ctrl+l 链接
+                break;
+            // case 81:
+            //     this._blockquoteText();  //ctrl+l 链接
+            //     break;
+            case 81:
+                this._blockquoteText();  //ctrl+q 引用
+                break;
+            case 75:
+                this._codeText();  //ctrl+k 代码
+                break;
+            case 71:
+                this._pictureText();  //ctrl+g 图片
+                break;
+            case 79:
+                this._listOlText();  //ctrl+o  有序列表
+                break;
+            case 75:
+                this._listUlText();  //ctrl+u 无序列表
+                break;
+            case 72:
+                this._headerText();  //ctrl+h 标题
+                break;
+        }
+    }
+
+    // 提交表单
+    handleSubmit(e) {
         e.preventDefault();
         let {post, title, category, tags, createdAt, updatedAt, content, markdownContent} = this.state;
 
-        let date = new Date();
-        let now = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate() + " " + 
-                date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        let date = new Date(),
+            year = date.getFullYear(),
+            month = date.getMonth() + 1,
+            day = date.getDate(),
+            hours = date.getHours(),
+            minutes = date.getMinutes(),
+            seconds = date.getSeconds();
+
+        month = month >= 10 ? month : '0' + month;
+        day = day >= 10 ? day : '0' + day;
+        
+
+        let now = year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
         if (!createdAt) {
             // 如果是第一次创建此文章
             createdAt = now;
         }
         updatedAt = now;
+
+        let toc = this._createToc(content);
 
         let newPost = {
             title,
@@ -80,113 +265,45 @@ class markdownApp extends Component {
             createdAt,
             updatedAt,
             content,
-            markdownContent
+            markdownContent,
+            toc
         };
 
         if (!this.state.isUpdate) {
             createPost(newPost)
                 .then(res => {
-                    this._verifyResult(res,'发表文章成功！')
+                    this._verifyResult(res,'发表文章');
                 })
         }else {
             updatePostById(post['_id'], newPost)
                 .then(res => {
-                    this._verifyResult(res,'编辑文章成功！')
+                    this._verifyResult(res,'编辑文章');
                 })
         }
     }
-    _verifyResult(res, successStr) {
-        if (res.status === 'fail') {
-            return alert(res.description);
-        }
-        alert(successStr);
-    }
     
-    render() {
-        let {title, category, tags, isFullScreen, mode} = this.state;
-        const panelClass = classnames(['myEditor', {'fullscreen': isFullScreen}])
-        const editorClass = classnames(['md-editor', mode]);
-
-        return (
-            <Form className='edit-wrapper'
-                name='editForm'
-                onSubmit={this._handleSubmit.bind(this)}>
-                <FormGroup row>
-                    <Col sm={12}>
-                        <Input type="text" name="title" placeholder="标题：我的标题咯" size="lg"
-                            name='title'
-                            value={title || ''}
-                            onChange={this._handleInputChange.bind(this,'title')}/>
-                    </Col>
-                </FormGroup>
-
-                <FormGroup row>
-                    <Col sm={3}>
-                         <Input type="select" name="select" className='category'
-                            name='category'
-                            value={category}
-                            onChange={this._handleInputChange.bind(this,'category')}>
-                            {
-                                this.props.category.map(item => <option key={item.name}>{item.name}</option>)
-                            }
-                        </Input>
-                    </Col>
-                    <Col sm={9}>
-                        <Input type="text" name="tags" placeholder="标签，多个标签间用,分割"
-                            name='tags'
-                            value={tags || []}
-                            onChange={this._handleInputChange.bind(this,'tags')}/>
-                    </Col>
-                </FormGroup>
-
-                <FormGroup row>
-                    <Col sm={12}>
-                    {/** 编辑器 **/}
-                         <div className={panelClass}>
-                            <div className='md-menubar clearfix'>
-                                {this._getToolBar()}
-                                {this._getModeBar()}
-                            </div>
-                            <div className={editorClass}>
-                                {this._getEditor()}
-                                
-                                {this._getShower()}
-                            </div>
-                        </div>
-                    </Col>
-                </FormGroup>
-
-                <FormGroup check row>
-                    <Col sm={2} className='col-md-offset-5'>
-                        <Button className='btn-primary-outline' color="primary" size='lg' block>
-                            提交文章
-                        </Button>
-                    </Col>
-                </FormGroup>
-            </Form>
-        );
-    }
     // 渲染toolBar组件
-     _getToolBar() {
+    renderToolBar() {
         return (
             <ul className="md-toolbar clearfix">
-                <li className="tb-btn"><a title="加粗" onClick={this._boldText.bind(this)}><i className="iconfont icon-bold"></i></a></li>{/* bold */}
-                <li className="tb-btn"><a title="斜体" onClick={this._italicText.bind(this)}><i className="iconfont icon-italic"></i></a></li>{/* italic */}
+                <li className="tb-btn"><a title="加粗 ctrl+b" onClick={this._boldText.bind(this)}><i className="iconfont icon-bold"></i></a></li>{/* bold */}
+                <li className="tb-btn"><a title="斜体 ctrl+i" onClick={this._italicText.bind(this)}><i className="iconfont icon-italic"></i></a></li>{/* italic */}
                 <li className="tb-btn spliter"></li>
-                <li className="tb-btn"><a title="链接" onClick={this._linkText.bind(this)}><i className="iconfont icon-link"></i></a></li>{/* link */}
-                <li className="tb-btn"><a title="引用" onClick={this._blockquoteText.bind(this)}><i className="iconfont icon-indent"></i></a></li>{/* blockquote */}
-                <li className="tb-btn"><a title="代码段" onClick={this._codeText.bind(this)}><i className="iconfont icon-code"></i></a></li>{/* code */}
-                <li className="tb-btn"><a title="图片" onClick={this._pictureText.bind(this)}><i className="iconfont icon-image"></i></a></li>{/* picture-o */}
+                <li className="tb-btn"><a title="链接 ctrl+l" onClick={this._linkText.bind(this)}><i className="iconfont icon-link"></i></a></li>{/* link */}
+                <li className="tb-btn"><a title="引用 ctrl+q" onClick={this._blockquoteText.bind(this)}><i className="iconfont icon-indent"></i></a></li>{/* blockquote */}
+                <li className="tb-btn"><a title="代码段 ctrl+k" onClick={this._codeText.bind(this)}><i className="iconfont icon-code"></i></a></li>{/* code */}
+                <li className="tb-btn"><a title="图片 ctrl+g" onClick={this._pictureText.bind(this)}><i className="iconfont icon-image"></i></a></li>{/* picture-o */}
                 <li className="tb-btn spliter"></li>
-                <li className="tb-btn"><a title="有序列表" onClick={this._listOlText.bind(this)}><i className="iconfont icon-orderedlist"></i></a></li>{/* list-ol */}
-                <li className="tb-btn"><a title="无序列表" onClick={this._listUlText.bind(this)}><i className="iconfont icon-unorderedlist"></i></a></li>{/* list-ul */}
-                <li className="tb-btn"><a title="标题" onClick={this._headerText.bind(this)}><i className="iconfont iconfont-header">H2</i></a></li>{/* header */}
+                <li className="tb-btn"><a title="有序列表 ctrl+o" onClick={this._listOlText.bind(this)}><i className="iconfont icon-orderedlist"></i></a></li>{/* list-ol */}
+                <li className="tb-btn"><a title="无序列表 ctrl+u" onClick={this._listUlText.bind(this)}><i className="iconfont icon-unorderedlist"></i></a></li>{/* list-ul */}
+                <li className="tb-btn"><a title="标题 ctrl+h" onClick={this._headerText.bind(this)}><i className="iconfont iconfont-header">H2</i></a></li>{/* header */}
                 
             </ul>
         );
     }
+
     // 渲染modeBar组件
-    _getModeBar() {
+    renderModeBar() {
         const checkActive = (mode) => classnames({active: this.state.mode === mode});
 
         return (
@@ -215,8 +332,10 @@ class markdownApp extends Component {
             </ul>
         );
     }
+    
+    
     // 渲染编辑组件
-    _getEditor() {
+    renderEditor() {
         // let markdownContent = this.state.markdownContent || '';
         return (
             <section className='md-area' >
@@ -224,8 +343,8 @@ class markdownApp extends Component {
                     placeholder="请输入markdown文本"
                     name='markdownContent'
                     ref='editor'
-                    onChange={(e) => {this._handleTextAreaChange(e.target.value)}}
-                    onKeyDown={(e) => {this._handleKeyDown(e)}}
+                    onChange={(e) => {this.handleTextAreaChange(e.target.value)}}
+                    onKeyDown={(e) => {this.handleKeyDown(e)}}
                     value={this.state.markdownContent || ''}>
                 </textarea>
             </section>
@@ -233,7 +352,7 @@ class markdownApp extends Component {
     }
 
     // 渲染md视图组件
-    _getShower() {
+    renderShower() {
         return (
             <div className='md-shower'
                 ref='shower'
@@ -241,38 +360,56 @@ class markdownApp extends Component {
             </div>
         );
     }
-    // 设置marked插件属性，以及highlight方式
-    _convertor(markdownContent) {
-        let rendererMD = new marked.Renderer();
-        marked.setOptions({
-            renderer: rendererMD,
-            highlight: function (code) {
-                return hljs.highlightAuto(code).value;
-            },
-            gfm: true, //允许 Git Hub标准的markdown.
-            tables: true, //允许支持表格语法
-            breaks: true, //允许回车换行。该选项要求 gfm 为true。
-            pedantic: false, //不纠正原始模型任何的不良行为和错误
-            sanitize: false, //对输出进行过滤（清理），将忽略任何已经输入的html代码（标签）
-            smartLists: true, //使用比原生markdown更时髦的列表。
-            smartypants: false //使用更为时髦的标点，比如在引用语法中加入破折号。 
-        });
+    
+    render() {
+        let {title, category, tags, isFullScreen, mode} = this.state;
+        const panelClass = classnames(['myEditor', {'fullscreen': isFullScreen}])
+        const editorClass = classnames(['md-editor', mode]);
 
-        return marked(markdownContent);
-    }
+        return (
+            <Form className='edit-wrapper'
+                name='editForm'
+                id='editForm'
+                onSubmit={this.handleSubmit.bind(this)}>
+                    <input type="text" name="title" placeholder="标题：我的标题" 
+                        className='edit-title form-control form-control-lg'
+                        ref={(input) => {this.input = input}}
+                        name='title'
+                        value={title || ''}
+                        onChange={this.handleInputChange}/>
 
-    _changeMode(mode) {
-        return (e) => {
-            this.setState({
-                mode: mode
-            });
-        }
-    }
+                    <div className='clearfix'>
+                        <Input type="select" name="select" className='category'
+                            className='edit-category'
+                            name='category'
+                            value={category}
+                            onChange={this.handleInputChange}>
+                            {
+                                this.props.category.map(item => <option key={item.name}>{item.name}</option>)
+                            }
+                        </Input>
 
-    _toggleFullScreen() {
-        this.setState({
-            isFullScreen: !this.state.isFullScreen
-        });
+                        <Input type="text" name="tags" placeholder="标签，多个标签间用,分割"
+                            className='edit-tags'
+                            name='tags'
+                            value={tags || []}
+                            onChange={this.handleInputChange}/>
+                    </div>
+
+
+                    <div className={panelClass}>
+                    <div className='md-menubar clearfix'>
+                        {this.renderToolBar()}
+                        {this.renderModeBar()}
+                    </div>
+                    <div className={editorClass}>
+                        {this.renderEditor()}
+                        
+                        {this.renderShower()}
+                    </div>
+                </div>
+            </Form>
+        );
     }
   
     /**
@@ -309,43 +446,8 @@ class markdownApp extends Component {
             markdownContent: this.editorDom.value
         });
     }
-    _handleKeyDown(e) {
-        if (!e.ctrlKey) {
-            return;
-        }
-        switch (e.keyCode) {
-            case 66:
-                this._boldText();  //ctrl+b 加粗
-                break;
-           case 73:
-                this._italicText();  //ctrl+b 斜体
-                break;
-            case 76:
-                this._linkText();  //ctrl+b 链接
-                break;
-            case 81:
-                this._linkText();  //ctrl+l 链接
-                break;
-            case 65:
-                this._blockquoteText();  //ctrl+q 引用
-                break;
-            case 75:
-                this._codeText();  //ctrl+k 代码
-                break;
-            case 71:
-                this._pictureText();  //ctrl+g 图片
-                break;
-            case 79:
-                this._listOlText();  //ctrl+o  有序列表
-                break;
-            case 75:
-                this._listUlText();  //ctrl+u 无序列表
-                break;
-            case 72:
-                this._headerText();  //ctrl+h 标题
-                break;
-        }
-    }
+
+
 
     _boldText() {
         this._preInputText("**加粗文字**", 2, 6);

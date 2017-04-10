@@ -24,26 +24,26 @@
 @import "custom-forms";
 @import "nav";
 @import "navbar";
-// @import "card";
+@import "card";
 @import "breadcrumb";
-// @import "pagination";
+@import "pagination";
 @import "pager";
 @import "labels";
-// @import "jumbotron";
+@import "jumbotron";
 // @import "alert";
 @import "progress";
-// @import "media";
+@import "media";
 @import "list-group";
 @import "responsive-embed";
 @import "close";
 
 // Components w/ JavaScript
 @import "modal";
-@import "tooltip";
-@import "popover";
-@import "carousel";
+// @import "tooltip";
+// @import "popover";
+// @import "carousel";
 
-// Utility classes
+// // Utility classes
 @import "utilities";
 @import "utilities-spacing";
 @import "utilities-responsive";

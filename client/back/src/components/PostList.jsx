@@ -1,13 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Table, Button  } from 'reactstrap';
 // import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Modal from '../components/Modal.jsx';
 import { Link } from 'react-router';
 
 class PostList extends Component {
+    static propTypes = {
+        postList: PropTypes.array,
+        modal: PropTypes.bool, 
+        handelToggle: PropTypes.func,
+        handelDelete: PropTypes.func,
+    }
  
     renderPost() {
-        let {postList, toggle} = this.props;
+        let {postList, handelToggle} = this.props;
 
         let idx = 0;
         return postList && postList.map(post => {
@@ -19,7 +25,7 @@ class PostList extends Component {
                     <td>{post.category}</td>
                     <td>
                         <Link to={`/admin/manage/edit/${post['_id']}`} className='btn btn-primary-outline btn-sm'>编辑</Link>
-                        <Link onClick={() => toggle((post))} className='btn btn-danger-outline btn-sm'>删除</Link>   
+                        <Link onClick={() => handelToggle((post))} className='btn btn-danger-outline btn-sm'>删除</Link>   
                     </td>
                 </tr>
             )
@@ -27,7 +33,7 @@ class PostList extends Component {
     }
 
     render() {
-        let {postList, modal, toggle, handelDelete} = this.props;
+        let {postList, modal, handelToggle, handelDelete} = this.props;
 
         return (
             <div className='table-wrapper'> 
@@ -45,7 +51,7 @@ class PostList extends Component {
                     </tbody>
                 </Table>
                 
-                <Modal modal={modal} toggle={toggle} handelDelete={handelDelete}/>
+                <Modal modal={modal} handelToggle={handelToggle} handelDelete={handelDelete}/>
             </div>
         );
     }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import PostList from '../components/PostList.jsx'
 import Pagination from '../components/Pagination.jsx';
+import Loading from '../components/Loading.jsx';
 
 import {countPost, getPostByPage} from '../utils/request';
 
@@ -24,11 +25,12 @@ class Home extends Component {
         countPost()
             .then(res => {
                 let pageNum = Math.ceil(res/this.state.limit); 
-                this.pageQuery(pageNum);
+                this._pageQuery(pageNum);
             })
     }
 
-    pageQuery(newPageNum=0, currentPage) {
+    // 分页，获取文章列表
+    _pageQuery(newPageNum=0, currentPage) {
         // 如果不传入currentPage参数，说明是在页面加载时调用此方法，设置currentPage = url中的page参数
         currentPage = currentPage ? currentPage : parseInt(this.props.location.query.page);
         // 如果url中的page参数大于总页数，则加载第一页
@@ -46,6 +48,7 @@ class Home extends Component {
             })
     }
 
+    // 下一页
     handleNext() {
         let {pageNum, currentPage} = this.state;
         
@@ -54,12 +57,13 @@ class Home extends Component {
         }
 
         currentPage++;
-        this.pageQuery(pageNum, currentPage);
+        this._pageQuery(pageNum, currentPage);
         this.setState({
             currentPage: currentPage
         });
     }
-    
+
+    // 上一页
     handlePrev() {
         let {pageNum, currentPage} = this.state;
         
@@ -68,27 +72,31 @@ class Home extends Component {
         }
 
         currentPage--;
-        this.pageQuery(pageNum, currentPage);
+        this._pageQuery(pageNum, currentPage);
         this.setState({
             currentPage: currentPage
         });
     }
     
-    
     render() {
         const {pageNum, currentPage, postList} = this.state;
-
-        return (
-            <section className='home'>
-                <PostList postList={postList} />
-                <Pagination 
-                    currentPage={currentPage}
-                    pageNum={pageNum} 
-                    next={this.handleNext}
-                    prev={this.handlePrev}/>
-            </section>
-        );
+        
+        if (!postList.length) {
+            return <Loading />
+        } else {
+            return (
+                <section className='home'>
+                    <PostList postList={postList} />
+                    <Pagination 
+                        currentPage={currentPage}
+                        pageNum={pageNum} 
+                        handleNext={this.handleNext}
+                        handlePrev={this.handlePrev}/>
+                </section>
+            )
+        }
     }
+
 }
 
 export default Home;

@@ -35,16 +35,28 @@ class Search extends Component {
             })
     }
     
+    renderNull() {
+        return (
+            <div className='post-null'>
+                <h3>没有找到文章。试试其它搜索？</h3>
+            </div>
+        )
+    }
+    
     render() {
         let {postList, searchValue} = this.state;
 
         return (
            <section className='search'>
                 <h2 className='title'>搜索：<span className='tag-name'>{searchValue}</span></h2>
-                <PostList postList={postList}/>
+                {
+                    postList.length ? <PostList postList={postList}/> : this.renderNull()
+                }
+    
             </section>
         );
     }
+
 }
 
 export default Search;

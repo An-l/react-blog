@@ -15,7 +15,6 @@ class Tools extends Component {
     }
     
     render() {
-        
         return (
             <div className='tools-wrap'>
                 <a className="iconfont icon-totop" href="#" title="回到顶部" onClick={this._toTop.bind(this)}></a>
@@ -25,6 +24,8 @@ class Tools extends Component {
     }
 }
 
+// 缓动算法
+// A现在的位置， B目标位置， rate速率
 Math.easeout = function (A, B, rate, callback) {
     if (A == B || typeof A != 'number') {
         return;

@@ -1,3 +1,5 @@
+import { browserHistory } from 'react-router';
+
 export default function request (method, url, body) {
     method = method.toUpperCase();
     url = 'http://127.0.0.1:3000/api/' + url;
@@ -22,9 +24,17 @@ export default function request (method, url, body) {
         body
         })
         .then(res => {
-
             return res.json()
-        }, err => console.warn('连接不上服务器：' + err));
+        }, err => console.warn('连接不上服务器：' + err))
+        .then(res => {
+           
+            if (res.status === 'fail') {
+                alert(res.description)
+                browserHistory.push('admin');
+                return false;
+            }
+            return res;
+        });
 }
 
 export const getPostList = () => {
@@ -43,6 +53,10 @@ export const getTagNum = (tag) => {
 };
 export const countPost = () => {
     let url = 'post?count=1';
+    return request('GET', url);
+}
+export const countPostByCatogory = (category) => {
+    let url = `post?conditions={"category":"${category}"}&count=1`;
     return request('GET', url);
 }
 export const getPostByPage = ( pageNum=0, currentPage=1, limit=2 ) => {
@@ -86,6 +100,16 @@ export const deletePostById = (id) => {
 export const deleteCategoryById = (id) => {
     let url = `category/${id}`;
     return request('DELETE', url)
+};
+
+export const getOption = () => {
+    let url = 'option';
+    return request('GET', url)
+};
+
+export const updateOptionById = (id, body) => {
+    let url = `option/${id}`;
+    return request('PATCH', url, body)
 };
 
 export const login = (body) => {

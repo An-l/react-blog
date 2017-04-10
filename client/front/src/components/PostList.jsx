@@ -1,21 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import Loading from '../components/Loading.jsx';
 
 class PostList extends Component {
-    render() {
-        let {postList} = this.props;
-
-        return (
-            <div className='post-list'>
-                {
-                    postList.length !== 0 ?
-                    this._renderPostList(postList)
-                    : this._renderNull()
-                }
-            </div>
-        );
+    static propTypes = {
+        postList: PropTypes.array
     }
-    _renderPostList(postList) {
+
+    // 渲染文章列表
+    renderPostList(postList) {
         return postList.map((post) => {
             let summary = post.content.slice(0,150) + '...';
 
@@ -42,13 +35,19 @@ class PostList extends Component {
             )
         })
     }
+    
+    render() {
+        let {postList} = this.props;
 
-    _renderNull() {
-        return (
-            <div className='post-null'>
-                <h3>没有找到文章。试试其它搜索？</h3>
-            </div>
-        )
+        if (!postList.length) {
+            return <Loading />
+        } else {
+            return (
+                <div className='post-list'>
+                    {this.renderPostList(postList)}
+                </div>
+            );
+        }
     }
 }
 

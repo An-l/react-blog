@@ -8,7 +8,6 @@ import './styles/index.scss'
 
 import LoginPage from './pages/Login.jsx'
 import HomeLayout from './layouts/HomeLayout.jsx'
-import HomePage from './pages/Home.jsx'
 import EditPage from './pages/Edit.jsx'
 import SettingPage from './pages/Setting.jsx'
 import PostPage from './pages/Post.jsx'
@@ -17,11 +16,11 @@ import ErrorPage from './pages/Error.jsx'
 
 
 ReactDOM.render((
-     <Router history={hashHistory}>
+     <Router history={browserHistory}>
         <Route path='admin' >
             <IndexRoute component={LoginPage}/>
             <Route path='manage' component={HomeLayout} onEnter={requireCredentials}>
-                <IndexRoute component={HomePage} />
+                <IndexRoute component={PostPage} />
                 <Route path='post' component={PostPage} />
                 <Route path='category' component={CategoryPage} />
                 <Route path='edit' component={EditPage} />
@@ -41,8 +40,8 @@ function requireCredentials(nextState, replace, next) {
   if (token) {
     next();//成功,通过next()成功跳转
   } else {
-    replace('/admin/');
-    alert('请重新登录啊！');
+    replace('admin/');
+    alert('请重新登录！');
     next();
   }
 }　　

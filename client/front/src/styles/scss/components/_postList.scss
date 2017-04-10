@@ -12,7 +12,10 @@
         }
         
         &-title{
-            @extend %post-title;
+            display: inline-block;
+            margin: 0;
+            margin-bottom: 10px;
+            font-size: 1.7em;
             a {
                 color: $color-title-default;
             }
@@ -22,7 +25,10 @@
         }
 
         &-meta {
-            @extend %post-meta;
+            float: right;
+            font-size: .9em;
+            line-height: 33px;
+            color: #555;
         }
 
         &-category {
@@ -51,6 +57,9 @@
             h1,
             h2 {
                 font-size: 1.5em;
+            }
+            h3 {
+                font-size: 1.3em;
             }
         }
 

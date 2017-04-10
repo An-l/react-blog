@@ -1,29 +1,89 @@
 <!doctype html>
 <html lang="zh-cn">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Hello my React`s Blog</title>
-  <!--<link rel="stylesheet" href="/bootstrap.min.css">-->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>An-l的小站</title>
+	<style>
+		#loading {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			margin-left: -50px;
+			margin-top: -30px;
+			width: 100px;
+			height: 60px;
+			text-align: center;
+			font-size: 2em;
+		}
+		
+		#loading>div {
+			background-color: #00A8E8;
+			height: 100%;
+			width: 6px;
+			display: inline-block;
+			-webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+			animation: stretchdelay 1.2s infinite ease-in-out;
+		}
+		
+		#loading .rect2 {
+			-webkit-animation-delay: -1.1s;
+			animation-delay: -1.1s;
+		}
+		
+		#loading .rect3 {
+			-webkit-animation-delay: -1.0s;
+			animation-delay: -1.0s;
+		}
+		
+		#loading .rect4 {
+			-webkit-animation-delay: -0.9s;
+			animation-delay: -0.9s;
+		}
+		
+		#loading .rect5 {
+			-webkit-animation-delay: -0.8s;
+			animation-delay: -0.8s;
+		}
+		
+		@-webkit-keyframes stretchdelay {
+			0%,
+			40%,
+			100% {
+				-webkit-transform: scaleY(0.4)
+			}
+			20% {
+				-webkit-transform: scaleY(1.0)
+			}
+		}
+		
+		@keyframes stretchdelay {
+			0%,
+			40%,
+			100% {
+				transform: scaleY(0.4);
+				-webkit-transform: scaleY(0.4);
+			}
+			20% {
+				transform: scaleY(1.0);
+				-webkit-transform: scaleY(1.0);
+			}
+		}
+	</style>
 </head>
+
 <body>
-  <!-- 这个div必须和index.js里的render方法里传入的第二个参数保持一致 -->
-  <div id="root"></div>
-  <!--<div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
-<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
-<script>
-var cloudTieConfig = {
-  url: document.location.href, 
-  sourceId: "home",
-  productKey: "9ed327c62b594bce9dfb566815c7d1d6",
-  target: "cloud-tie-wrapper"
-};
-var yunManualLoad = true;
-Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
-</script>-->
-  <!-- roadhog背后会把你的代码从入口文件开始打包成一个index.js文件 -->
-  <script src="/bundle.js"></script>
+	<div id="root"></div>
+	<div id="loading">
+		<div class="rect1"></div>
+		<div class="rect2"></div>
+		<div class="rect3"></div>
+		<div class="rect4"></div>
+		<div class="rect5"></div>
+	</div>
+	<script src="/bundle.js"></script>
 </body>
+
 </html>

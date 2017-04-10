@@ -1,11 +1,9 @@
-const {
-    resolve
-} = require('path');
+const {resolve} = require('path');
 const webpack = require('webpack');
 
 module.exports = {
     entry: [
-        'webpack-dev-server/client?http://localhost:80',
+        // 'webpack-dev-server/client?http://localhost:80',
         // bundle the client for webpack-dev-server
         // and connect to the provided endpoint
 
@@ -18,7 +16,9 @@ module.exports = {
 
         path: resolve(__dirname, 'dist'),
 
-        // publicPath: '/'
+        publicPath: '/',
+
+        chunkFilename: '[name].[chunkhash:5].chunk.js'
         // necessary for HMR to know where to load the hot update chunks
     },
 
@@ -40,15 +40,17 @@ module.exports = {
         port: 80,
         // 设置默认监听端口，如果省略，默认为"8080"
 
-        publicPath: '/'
+        // publicPath: '/'
         // match the output `publicPath`
     },
 
     module: {
         rules: [{
                 test: /\.(js|jsx)$/,
-                use: ['babel-loader'],
-                exclude: /node_modules/
+                exclude: /node_modules/,
+                loaders: [
+                    'babel-loader?presets[]=react,presets[]=es2015,presets[]=stage-0'
+                ]
             },
             // {
             //     test: /\.css$/,

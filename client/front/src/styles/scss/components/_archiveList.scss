@@ -13,10 +13,17 @@
     }
 
     .post-info {
-        margin-left: 10px;
+        margin-left: 15px;
         color: #999;
         font-size: 15px;
         // font-style:italic;
+        
+        .tags{
+            margin-left: 10px;
+        }
+        .notebook {
+            margin-left: 5px;
+        }
     }
     
 }

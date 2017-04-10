@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap';
 import { browserHistory } from 'react-router';
+import md5 from 'blueimp-md5';
 
 import { login } from '../utils/request';
 
@@ -17,26 +18,6 @@ class Login extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(e) {
-        let prop = e.target.name;
-        this.setState({
-            [prop] : e.target.value
-        });
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        let body = {
-            name: this.state.name,
-            password: this.state.password
-        };
-        
-        login(body)
-            .then(res => {
-                 this._verifyLogin(res);
-            })
-    }
-
     _verifyLogin(res) {
         switch (res.status) {
             case 'fail':
@@ -47,12 +28,33 @@ class Login extends Component {
                 sessionStorage.setItem('blog-token', token);
                 browserHistory.push('/admin/manage');
                 break;
-            default:
-                alert('连接服务器失败！');
-                break;
         }
     }
-    
+
+    handleChange(e) {
+        let prop = e.target.name;
+        this.setState({
+            [prop] : e.target.value
+        });
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        if (!this.state.name || !this.state.password) {
+            return alert('用户名和密码不能为空！');
+        }
+        
+        let body = {
+            name: this.state.name,
+            password: md5(this.state.password) // md5加密密码
+        };
+        
+        login(body)
+            .then(res => {
+                 this._verifyLogin(res);
+            })
+    }
+
     render() {
         return (
             <Container className='login'>

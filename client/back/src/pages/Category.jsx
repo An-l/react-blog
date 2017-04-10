@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CategoryList from '../components/CategoryList.jsx';
 import Tools from '../components/Tools.jsx';
-import { getCategory, createCategory, updateCategoryById, deleteCategoryById } from '../utils/request';
+import { getCategory, createCategory, updateCategoryById, deleteCategoryById, countPostByCatogory } from '../utils/request';
 
 class Category extends Component {
     constructor (props) {
@@ -13,7 +13,7 @@ class Category extends Component {
             activeCategory: '',
             addCategory: ''
         };
-        this.toggle = this.toggle.bind(this);
+        this.handelToggle = this.handelToggle.bind(this);
         this.handelAddInputChange = this.handelAddInputChange.bind(this);
         this.handelAddClick = this.handelAddClick.bind(this);
         this.handelUpdate = this.handelUpdate.bind(this);
@@ -24,13 +24,24 @@ class Category extends Component {
     componentDidMount() {
         getCategory()
             .then(res => {
-                this.setState({
-                    categoryList: res
-                });
-            });
+                let fnArr = res.map(category => {
+                    return countPostByCatogory(category.name).then(res => {
+                        category.count = res;
+                        return category;
+                    })
+                })
+                Promise.all(fnArr)
+                    .then(values =>{
+                        this.setState({
+                            categoryList: values
+                        });
+                    })
+            })   
     }
 
-    toggle(category) {
+
+
+    handelToggle(category) {
         this.setState({
             modal: !this.state.modal,
             activeCategory: category || ''
@@ -80,8 +91,10 @@ class Category extends Component {
         updateCategoryById(id, category)
             .then(res => {
                 alert('修改分类成功！');
+                this.setState({
+                    activeCategory: ''
+                });
             })
-        
     }
     handelInputChange(e, obj) {
         let newCategoryList = this.state.categoryList;
@@ -97,13 +110,12 @@ class Category extends Component {
             activeCategory: obj
         });
     }
-
-    render() {
-        return (
-            <div>
-                <Tools title='分类列表'/>
-                <div className='content-wrapper'>
-                    <CategoryList 
+    countPost() {
+        countPostByCatogory
+    }
+    _renderCategoryList(){
+        if (this.state.categoryList.length) {
+            return <CategoryList 
                         categoryList={this.state.categoryList}
                         modal={this.state.modal} 
                         addCategory={this.state.addCategory}
@@ -112,8 +124,19 @@ class Category extends Component {
                         handelAddClick={this.handelAddClick} 
                         handelUpdate={this.handelUpdate}
                         handelDelete={this.handelDelete}
-                        toggle={this.toggle}
+                        handelToggle={this.handelToggle}
                         />
+        }
+    }
+
+    render() {
+        return (
+            <div className='categoryPage'>
+                <Tools title='分类列表'/>
+                <div className='content-wrapper'>
+                    {
+                        this._renderCategoryList()
+                    }
                 </div>
             </div>
         );

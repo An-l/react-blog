@@ -12,7 +12,7 @@ class Post extends Component {
             modal: false,
             activePost: ''
         };
-        this.toggle = this.toggle.bind(this);
+        this.handelToggle = this.handelToggle.bind(this);
         this.handelDelete = this.handelDelete.bind(this);
     }
 
@@ -25,7 +25,7 @@ class Post extends Component {
             });
     }
 
-    toggle(post) {
+    handelToggle(post) {
         this.setState({
             modal: !this.state.modal,
             activePost: post
@@ -48,10 +48,14 @@ class Post extends Component {
 
     render() {
         return (
-            <div>
+            <div className='postPage'>
                 <Tools title='文章列表'/>
                 <div className='content-wrapper'>
-                    <PostList postList={this.state.postList} modal={this.state.modal} toggle={this.toggle} handelDelete={this.handelDelete}/>
+                    <PostList 
+                        postList={this.state.postList} 
+                        modal={this.state.modal} 
+                        handelToggle={this.handelToggle} 
+                        handelDelete={this.handelDelete}/>
                 </div>
             </div>
         );

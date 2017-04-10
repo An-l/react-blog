@@ -1,13 +1,37 @@
-import React, {PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react';
 import { Link } from 'react-router';
-import SearchBox from '../components/SearchBox.jsx';    
+import SearchBox from '../components/SearchBox.jsx';
 
-class NavBar extends React.Component {
+import { getOption } from '../utils/request.js';
 
+class NavBar extends Component {
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            blogName : "An-l的小站",
+            blogDescription : "",
+            url : "an-l.cn",
+            faviconUrl : "",
+            logoUrl : "",
+            githubUrl : "https://github.com/An-l",
+            weiboUrl : "http://weibo.com/annnl",
+            ICP : ""
+        }
+    }
+    
+    componentDidMount() {
+        getOption()
+            .then(res => {
+                let {blogName, blogDescription, url, faviconUrl, logoUrl, githubUrl, weiboUrl, ICP} = res[0];
+                this.setState({blogName, blogDescription, url, faviconUrl, logoUrl, githubUrl, weiboUrl, ICP});
+            })
+    }
+    
     render() {
         return (
             <nav className='navbar'>
-                <h1>An-l的小站</h1>
+                <h1>{this.state.blogName}</h1>
                 <ul className='main-nav'>
                     <li>
                         <Link to="/" title="首页">
@@ -35,20 +59,19 @@ class NavBar extends React.Component {
                     </li>
                 </ul>
                 <div className='sider-nav'>
-                        <a title="GitHub" target="_blank" href="https://github.com/An-l">
+                        <a title="GitHub" target="_blank" href={this.state.githubUrl}>
                             <i className="iconfont icon-github"></i>
                         </a>
-                        <a title="Weibo" target="_blank" href="http://weibo.com/annnl">
+                        <a title="Weibo" target="_blank" href={this.state.weiboUrl}>
                             <i className="iconfont icon-zliconweibo01"></i>
                         </a>
                         <a title="RSS" target="_blank" href="/rss.xml">
                             <i className="iconfont icon-rss"></i>
                         </a>
-                        
                 </div>
                 <SearchBox />
             </nav>
-        )
+        );
     }
 }
 

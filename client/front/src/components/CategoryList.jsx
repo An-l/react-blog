@@ -1,15 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames';
 
 class CategoryList extends Component {
-    render() {
-        return (
-            this._renderCategoryList(this.props.categoryList)
-        );
+    static propTypes = {
+        categoryList: PropTypes.array,
+        activeCategory: PropTypes.string,
+        handleActiveChange: PropTypes.func,
     }
 
-     _renderCategoryList(categoryList) {
+    // 渲染分类列表
+    renderCategoryList(categoryList) {
         const checkActive = (name) => classnames({'active': this.props.activeCategory === name});
         return (
             <div className="category-list-wrap" aria-hidden="true">
@@ -20,7 +21,7 @@ class CategoryList extends Component {
                             return(
                                 <Link className={checkActive(item.name)} 
                                     key={item['_id']} 
-                                    to={`category/${item.name}`} 
+                                    to={`/category/${item.name}`} 
                                     onClick={() => this.props.handleActiveChange(item.name)}>
                                         {item.name}
                                     </Link>
@@ -31,6 +32,13 @@ class CategoryList extends Component {
             </div>
         )
     }
+    
+    render() {
+        return (
+            this.renderCategoryList(this.props.categoryList)
+        );
+    }
+
 }
 
 export default CategoryList;

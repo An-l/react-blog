@@ -5,6 +5,9 @@ html,
 #root{
     height: 100%;
     width: 100%;
+}
+body {
+    font-family: Helvetica Neue,Arial,Hiragino Sans GB,STHeiti,Microsoft YaHei;
     font-size: 18px;
     color: $color-default;
     background-color: $color-body-default;
@@ -26,29 +29,33 @@ a:active {
 .main {
     padding-left: 290px;
     padding-right: 60px;
-    max-width: 1390px;
+    max-width: 1190px;
     overflow: hidden;
-    
-    .animation-wrap{
 
-        section {
-            padding-bottom: 30px;
+    section {
+        padding-bottom: 30px;
 
-            .title {
-                padding-top: 30px;
-                margin-bottom: 25px;
-                font-size: 2em;
-                line-height: 35px;
-                font-weight: 300;
-                color: $color-title-default;
+        .title {
+            // padding-top: 30px;
+            margin-bottom: 25px;
+            font-size: 2em;
+            line-height: 35px;
+            font-weight: 300;
+            color: $color-title-default;
 
-                .tag-name {
-                    color: $color-a-default;
-                }
+            .tag-name {
+                color: $color-a-default;
             }
         }
-    }
-    
+
+        .notebook {
+            background-color: $color-code-backgroud;
+            color: $color-code;
+            font-size: 80%;
+            padding: 4px 5px;
+            border-radius: 0.25rem;
+        }
+    }    
 }
 
 .footer {
@@ -77,25 +84,26 @@ a:active {
 //     opacity: 1;
 // }
 
-.page-enter {
-    opacity: 0;
-    transform: translate(50%,0);
-    -webkit-transition: all 500ms ease-in;
-    transition: all 500ms ease-in;
-}
+// .page-enter {
+//     opacity: 0;
+//     // transform: translate(50%,0);
+//     -webkit-transition: all 500ms ease-in;
+//     transition: all 500ms ease-in;
+// }
 
-.page-enter.page-enter-active {
-    transform: translate(0,0);
-    opacity: 1;
-}
+// .page-enter.page-enter-active {
+//     // transform: translate(0,0);
+//     opacity: 1;
+// }
 
-.page-leave {
-    opacity: 1;
-    transform: translate(0,0);
-}
+// .page-leave {
+//     opacity: 1;
+//     // transform: translate(0,0);
+// }
 
-.page-leave.page-leave-active {
-    opacity: 0;
-    transform: translate(50%,0);
-    // transition: opacity 300ms ease-in;
-}
+// .page-leave.page-leave-active {
+//     opacity: 0;
+//     // transform: translate(50%,0);
+//     // transition: opacity 300ms ease-in;
+// }
+

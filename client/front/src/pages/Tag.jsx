@@ -9,19 +9,19 @@ class Tag extends Component {
         super(props);
         
         this.state = {
-            tagName: '',
+            tagName: this.props.params.name || '',
             postList: []
         }
     }
 
     
     componentDidMount() {
-        let tagName = this.props.params.name;
+        let tagName = this.state.tagName;
 
         getPostByTag(tagName)
             .then(res => {
                 this.setState({
-                    tagName: tagName,
+                    tagName,
                     postList: res
                 });
             })

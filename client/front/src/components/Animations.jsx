@@ -1,34 +1,6 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 
-const { PropTypes, Component } = React;
-const propTypes = {
-    width            : PropTypes.number,
-    height           : PropTypes.number,
-    measure          : PropTypes.string,
-    visible          : PropTypes.bool,
-    showMask         : PropTypes.bool,
-    showCloseButton  : PropTypes.bool,
-    animation        : PropTypes.string,
-    duration         : PropTypes.number,
-    className        : PropTypes.string,
-    customStyles     : PropTypes.object,
-    customMaskStyles : PropTypes.object,
-    onClose          : PropTypes.func.isRequired
-};
 
-const defaultProps = {
-    width            : 400,
-    height           : 240,
-    measure          : 'px',
-    visible          : false,
-    showMask         : true,
-    showCloseButton  : true,
-    animation        : 'zoom',
-    duration         : 300,
-    className        : '',
-    customStyles     : {},
-    customMaskStyles : {},
-};
 
 // env
 const inBrowser = typeof window !== 'undefined';
@@ -58,11 +30,39 @@ const Dialog = props => {
 };
 
 class Rodal extends Component {
+    static propTypes = {
+        width            : PropTypes.number,
+        height           : PropTypes.number,
+        measure          : PropTypes.string,
+        visible          : PropTypes.bool,
+        showMask         : PropTypes.bool,
+        showCloseButton  : PropTypes.bool,
+        animation        : PropTypes.string,
+        duration         : PropTypes.number,
+        className        : PropTypes.string,
+        customStyles     : PropTypes.object,
+        customMaskStyles : PropTypes.object,
+        onClose          : PropTypes.func.isRequired
+    };
+
+    static defaultProps = {
+        width            : 400,
+        height           : 240,
+        measure          : 'px',
+        visible          : false,
+        showMask         : true,
+        showCloseButton  : true,
+        animation        : 'zoom',
+        duration         : 300,
+        className        : '',
+        customStyles     : {},
+        customMaskStyles : {},
+    };
 
     constructor(props) {
         super(props);
 
-        this.animationEnd = this.animationEnd.bind(this);
+        this.handleanimationEnd = this.handleanimationEnd.bind(this);
         this.state = {
             isShow: false,
             animationType: 'leave'
@@ -71,33 +71,33 @@ class Rodal extends Component {
 
     componentDidMount() {
         if (this.props.visible) {
-            this.enter();
+            this._enter();
         }
     }
 
     componentWillReceiveProps(nextProps) {
         if (!this.props.visible && nextProps.visible) {
-            this.enter();
+            this._enter();
         } else if (this.props.visible && !nextProps.visible) {
-            this.leave();
+            this._leave();
         }
     }
 
-    enter() {
+    _enter() {
         this.setState({
             isShow: true,
-            animationType: 'enter'
+            animationType: '_enter'
         });
     }
 
-    leave() {
+    _leave() {
         const state = isIE9 
             ? { isShow: false } 
             : { animationType: 'leave' }
         this.setState(state);
     }
 
-    animationEnd() {
+    handleanimationEnd() {
         if (this.state.animationType === 'leave') {
             this.setState({ isShow: false });
         }
@@ -115,7 +115,7 @@ class Rodal extends Component {
         return (
             <div style={style} 
                  className={"rodal rodal-fade-" + state.animationType + ' ' + props.className} 
-                 onAnimationEnd={this.animationEnd}
+                 onAnimationEnd={this.handleanimationEnd}
             >
                 {mask}
                 <Dialog {...props} animationType={state.animationType}>
@@ -125,8 +125,5 @@ class Rodal extends Component {
         )
     }
 }
-
-Rodal.propTypes = propTypes;
-Rodal.defaultProps = defaultProps;
 
 export default Rodal;

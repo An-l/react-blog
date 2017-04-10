@@ -1,9 +1,28 @@
-.edit-wrapper {
-   padding-top: 30px;
+.editPage{
 
+    .edit-wrapper {
+        padding-top: 30px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
 
-   .category{
-       height: 38px;
-       
-   }
+        input,
+        select {
+            margin-bottom: 15px;
+        }
+        .edit-title {
+            
+        }
+        
+        .edit-category {
+                float: left;
+                width: 20%;
+                max-width: 300px;
+                height: 38px;
+        }
+        .edit-tags {
+                float: right;
+                width: 80%;
+        }
+    }
 }

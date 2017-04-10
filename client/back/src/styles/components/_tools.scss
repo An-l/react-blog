@@ -1,5 +1,4 @@
 .tools {
-    overflow: hidden;
     background-color: #ecf0f1;
     border-top-right-radius: 15px;
     padding: 0 20px;
@@ -16,9 +15,10 @@
         }
     }
 
-    .input-group {
-        width: 250px;
+    .tools-btn {
         float: right;
-        padding: 11px;
+        height: 100%;
+        line-height: 54px;
+        
     }
 }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import ArchiveList from '../components/ArchiveList.jsx';
+import Loading from '../components/Loading.jsx';
+
 import {getPostList} from '../utils/request';
 
 class Archive extends Component {
@@ -8,51 +10,31 @@ class Archive extends Component {
         super(props);
         
         this.state = {
-            timeList: {}
+            postList: []
         }
     }
     
     componentDidMount() {
-        // getPostList()
-        //     .then(res => {
-        //         this.initTimeList(res);
-        //     })
-        this._getPostList();
-    }
-
-     _getPostList() {
         getPostList()
             .then(res => {
-                this.initTimeList(res);
+                this.setState({
+                    postList: res
+                });
             });
     }
-
-    initTimeList(postList) {
-        let newTimeList = {};
-
-        postList.forEach(post => {
-            let timeArr = post['createdAt'].split("-",2);
-            let year = timeArr[0];
-
-            if(!newTimeList[year]){
-                newTimeList[year] = [];
-            }
-            newTimeList[year].push(post);
-        });
-
-        this.setState({
-            timeList: newTimeList
-        });
-    }  
     
     render() {
-        return (
-            <section className='archive'>
-                <h2 className='title'>归档</h2>
-                <ArchiveList 
-                    timeList={this.state.timeList} />
-            </section>
-        );
+        if (!Object.keys(this.state.postList).length) {
+            return <Loading />
+        } else {
+            return (
+                <section className='archive'>
+                    <h2 className='title'>归档</h2>
+                    <ArchiveList 
+                        postList={this.state.postList} />
+                </section>
+            );
+        }
     }
 }
 

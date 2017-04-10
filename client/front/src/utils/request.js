@@ -62,3 +62,8 @@ export const getPostByPage = ( pageNum=0, currentPage=1, limit=2 ) => {
             return request('GET', url);
         }
 }
+
+export const getOption = () => {
+    let url = 'option';
+    return request('GET', url)
+};

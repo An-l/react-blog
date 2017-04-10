@@ -116,7 +116,7 @@ exports.permission = async function (ctx, next) {
     if (result == false) {
         return ctx.body = {
             status: 'fail',
-            description: 'Token verify failed'
+            description: 'Token登录超时，请重新登录！'
         };
     }
 
@@ -129,7 +129,7 @@ exports.permission = async function (ctx, next) {
 
         return ctx.body = {
             status: 'fail',
-            description: 'Token invalid'
+            description: 'Token无效，请重新登录！'
         };
     }
 

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
-import { Link } from 'react-router';
-// import Changyan from '../components/Changyan.jsx';
+import { Link, browserHistory } from 'react-router';
+import hljs from 'highlight.js';
+
 import CloudTie from '../components/CloudTie.jsx';
 import Tools from '../components/Tools.jsx';
+import Loading from '../components/Loading.jsx';
 
 import { getPostById } from '../utils/request';
 
@@ -13,7 +15,8 @@ class Post extends Component {
 
         this.state = {
             post:{},
-            tocAcitve: false
+            tocAcitve: false,
+            loading: true
         };
 
         this._tocToggle = this._tocToggle.bind(this);
@@ -26,9 +29,15 @@ class Post extends Component {
         let id = this.props.params.id;
         getPostById(id)
             .then(res => {
-                this.setState({
-                    post: res
-                });
+                if (res.name == 'CastError') {
+                    browserHistory.push(`/404`);
+                }else {
+                    this.setState({
+                        post: res,
+                        loading: false
+                    });
+                    hljs.initHighlightingOnLoad();
+                }
             });
 
         window.onclick = () =>{
@@ -65,9 +74,14 @@ class Post extends Component {
     render() {
         const {post} = this.state;
 
-        return (
-            this._renderPost(post)
-        );
+        if (!Object.keys(post).length) {
+            return <Loading />
+        } else {
+            return (
+                this._renderPost(post)
+            );
+        }
+
     }
 
      // 渲染Toc的无状态组件
@@ -99,7 +113,7 @@ class Post extends Component {
         return (
             tags.map(tag => {
                 return (
-                    <Link to={`tag/${tag}`} key={tag}>
+                    <Link to={`/tag/${tag}`} key={tag}>
                         <code className="notebook">{tag}</code>&nbsp;
                     </Link> 
                 )
@@ -128,7 +142,7 @@ class Post extends Component {
                     </div>
                 </header>
                 
-                <div className="post-content">
+                <div className="post-content-wrap">
                     { post.toc !== "" ? this._renderToc(post) : '' }
                     { post.content !== "" ? this._renderContent(post) : '' }
                 </div>

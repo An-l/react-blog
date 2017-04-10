@@ -39,18 +39,6 @@
 
     .main {
         padding-left: 115px;
-
-        .tools-wrap {
-            width: 30px;
-            right: 10px;
-
-            .icon-totop,
-            .icon-comment {
-                height: 30px;
-                line-height: 30px;
-                font-size: 1em;
-            }
-        }
     }
     
 }
@@ -97,6 +85,18 @@
        .post-toc {
             top: 95px !important;
             right: 10px !important;
+        }
+
+        .tools-wrap {
+            width: 30px;
+            right: 10px;
+
+            .icon-totop,
+            .icon-comment {
+                height: 30px;
+                line-height: 30px;
+                font-size: 1em;
+            }
         }
    }
 }

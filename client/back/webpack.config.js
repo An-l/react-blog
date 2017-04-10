@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: [
-        'webpack-dev-server/client?http://localhost:8080',
+        // 'webpack-dev-server/client?http://localhost:8080',
         // bundle the client for webpack-dev-server
         // and connect to the provided endpoint
 
@@ -45,8 +45,10 @@ module.exports = {
     module: {
         rules: [{
                 test: /\.(js|jsx)$/,
-                use: ['babel-loader'],
-                exclude: /node_modules/
+                exclude: /node_modules/,
+                loaders: [
+                    'babel-loader?presets[]=react,presets[]=es2015,presets[]=stage-0'
+                ]
             },
             // {
             //     test: /\.css$/,

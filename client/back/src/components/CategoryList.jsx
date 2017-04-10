@@ -1,10 +1,21 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Table, Button, Input } from 'reactstrap';
 // import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Modal from '../components/Modal.jsx';
 
 
 class CategoryList extends Component {
+    static propTypes = {
+        categoryList: PropTypes.array,
+        modal: PropTypes.bool, 
+        addCategory: PropTypes.string,
+        handelInputChange: PropTypes.func,
+        handelAddInputChange: PropTypes.func,
+        handelAddClick: PropTypes.func, 
+        handelUpdate: PropTypes.func,
+        handelDelete: PropTypes.func,
+        handelToggle: PropTypes.func,
+    }
     
     renderCategory() {
         let idx = 0;
@@ -20,11 +31,11 @@ class CategoryList extends Component {
                             onChange={(e)=> this.props.handelInputChange(e, category)}/>
                     </td>
                     <td className='postNum'>
-                        <a href='#'>5</a>
+                        <a href={`an-l.cn/category/${category.name}`}>{category.count || 0}</a>
                     </td>
                     <td>
                         <Button onClick={() => this.props.handelUpdate(category)} className='btn-primary-outline' color="primary" size="sm">编辑</Button>{' '}
-                        <Button onClick={() => this.props.toggle(category)}  className='btn-danger-outline' color="danger" size="sm">删除</Button>
+                        <Button onClick={() => this.props.handelToggle(category)}  className='btn-danger-outline' color="danger" size="sm">删除</Button>
                     </td>
                 </tr>
             )
@@ -59,7 +70,7 @@ class CategoryList extends Component {
                         </tr>
                     </tbody>
                 </Table>
-                <Modal modal={this.props.modal} toggle={this.props.toggle} handelDelete={this.props.handelDelete}/>
+                <Modal modal={this.props.modal} handelToggle={this.props.handelToggle} handelDelete={this.props.handelDelete}/>
             </div>
         );
     }

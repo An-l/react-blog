@@ -1,4 +1,3 @@
-
 body,
 html,
 #root,
@@ -20,7 +19,7 @@ header {
 .main {
     display: flex;
     flex: 1;
-    margin: 0 20px;
+    margin: 67px 20px 0;
     border: 1px solid rgba(0, 0, 0, .2);
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -29,5 +28,21 @@ header {
     .sidebar {
         flex: 0 0 5em;
         order: -1;
+    }
+
+    .postPage,
+    .categoryPage,
+    .settingPage,
+    .editPage{
+        position: relative;
+        height: 100%;
+
+        .content-wrapper {
+            position: absolute;
+            top: 54px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
     }
 }

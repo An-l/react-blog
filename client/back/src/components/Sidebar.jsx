@@ -1,21 +1,41 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { Link, browserHistory } from 'react-router';
 import { logout } from '../utils/request';
 
 
 class Sidebar extends Component {
+    static propTypes = {
+        pathName: PropTypes.string
+    }
+
     constructor(props) {
         super(props);
-        let pathName = this.props.pathName.slice(1);
+
         this.state = {
-            active: pathName || 'home'
+            active: 'post'
         }
         this.handleLogout = this.handleLogout.bind(this);
     }
+
+    
+    componentWillMount() {
+        this._getActiveNavItem(this.props);
+    }
+    
     // componentWillReceiveProps(nextProps) {
-    //     debugger
+    //     this._getActiveNavItem(nextProps);
     // }
+
+    _getActiveNavItem(props) {
+        let pathName = props.pathName.match(/post|edit|category|setting/i);
+        // console.log(pathName);
+        pathName = pathName && pathName[0];
+        
+        this.setState({
+            active: pathName || 'post'
+        });
+    }
     
     handleChange(item) {
         this.setState({
@@ -30,7 +50,6 @@ class Sidebar extends Component {
                     sessionStorage.removeItem('blog-token');
                     browserHistory.push('/admin');
                 }else {
-                    alert('注销失败！');
                     browserHistory.push('/admin');
                 }
             })

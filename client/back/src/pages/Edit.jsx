@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { Button } from 'reactstrap';
 import { getPostById, getCategory } from '../utils/request';
 import Editor from '../components/Editor-mde.jsx';
 import Tools from '../components/Tools.jsx';
@@ -18,44 +19,44 @@ class Edit extends Component {
     
     componentDidMount() {
         let id = this.props.params.id || ''; 
-        id && this.setState({isUpdate: true}); //如果存在id则说明在编辑文章状态，
-        // 获取分类数组
-        getCategory()
-            .then(res => {
-                this.setState({
-                    category: res,
-                    loadEnd: this.state.loadEnd+1
+        if (id) {
+            Promise.all([getPostById(id), getCategory()])
+                .then(values =>{
+                    this.setState({
+                        post: values[0],
+                        category: values[1],
+                        isUpdate: true
+                    });
+                })
+        } else {
+            // 写新文章,只需获取分类
+            getCategory()
+                .then(res => {
+                    this.setState({
+                        category: res,
+                        isUpdate: false
+                    });
                 });
-            });
-
-        // 如果在编辑文章状态，获取文章对象
-        id && getPostById(id)
-            .then(res => {
-                this.setState({
-                    post: res,
-                    loadEnd: this.state.loadEnd+1
-                });
-            });
+        }
     }
-
-    //  componentDidUpdate (prevProps) {
-    //     // 上面步骤3，通过参数更新数据
-    //     let oldId = prevProps.params.invoiceId
-    //     let newId = this.props.params.invoiceId
-    //     debugger
-    // }
 
     renderEditor() {
-        return (
-            !this.state.isUpdate ? this.state.loadEnd === 1 && <Editor post={this.state.post} category={this.state.category} isUpdate={this.state.isUpdate}/>
-                                : this.state.loadEnd === 2 && <Editor post={this.state.post} category={this.state.category} isUpdate={this.state.isUpdate}/>
-        );
+        if (this.state.category.length) {
+            return (
+                <Editor post={this.state.post} category={this.state.category} isUpdate={this.state.isUpdate}/>
+            );
+        }
     }
 
-    render() {   
+    render() {
         return (
-            <div>
-                <Tools title='写文章'/>
+            <div className='editPage'>
+                <Tools title={this.state.isUpdate ? '编辑文章' : '写文章'}>
+                    <Button className='btn-primary-outline' color="primary" size='sm'
+                        form='editForm'>
+                        {this.state.isUpdate ? '编辑文章' : '提交文章'}
+                    </Button>
+                </Tools>
                 <div className='content-wrapper'>
                     {this.renderEditor()}
                 </div>

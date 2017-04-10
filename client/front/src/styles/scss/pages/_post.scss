@@ -1,78 +1,44 @@
 @import "helpers/parameters";
-
 section.post {
-    padding: 30px 0; 
+    padding: 30px 0;
     img {
         display: block;
         max-width: 100%;
         height: auto;
+        padding: 4px;
         border: 1px solid #ccc;
     }
     .post-title {
         @extend %post-title;
         color: $color-title-default;
     }
-    
+
     .post-meta {
-       @extend %post-meta
+        @extend %post-meta
     }
-    
-    .post-content {
+
+   
+    .post-info {
+        position: relative;
+        font-size: 14px;
+        padding-top: 5px;
+        a:hover {
+            color: $color-a-hover;
+        }
+    }
+    .post-content-wrap {
         font-size: 16px;
         line-height: 30px;
         text-align: justify;
-        
-        p {
-            margin-bottom: 15px;
-        }
-        h1,
-        h2{
-            font-size: 1.5em;
-            line-height: 64px;
-            margin-top: 30px;
-        }
-        h2,
-        h3,
-        h4 {
-            margin-bottom: 15px;
-            font-weight: normal;
-        }
-        h3 {
-            font-size: 1.35em;
-        }
-        
-        hr {
-            margin-bottom: 30px;
-            height: 4px;
-            border: none;
-            background-image: -webkit-linear-gradient(left, #003973, #e5e5be);
-            background-color: #ccc;
-            margin-left: -5px;
-            margin-right: -5px;
-        }
 
-        blockquote {
-            padding: 20px 20px 20px 20px;
-            background: #fbfbfb;
-            border: 1px dashed #b9d5ff;
-            border-width: 1px 0;
-            font-family: monospace;
-            position: relative;
-            // margin-top: 42px;
-            p {
-                margin-bottom: 0;
-            }
-        }
-
+        /** toc **/
         .post-toc {
             position: fixed;
             right: 20px;
             top: 32px;
-
-            .post-toc-dropdown{
+            .post-toc-dropdown {
                 display: none;
                 float: right;
-
                 i {
                     font-size: 1.7em;
                 }
@@ -83,7 +49,7 @@ section.post {
                     text-decoration: none;
                 }
             }
-            .post-toc-content{
+            .post-toc-content {
                 max-width: 260px;
                 min-width: 120px;
                 border: 1px dashed #e2e2e2;
@@ -92,10 +58,9 @@ section.post {
                 margin: 0 0 15px 20px;
                 padding: 6px;
                 background-color: #fff;
-
+                overflow: auto;
                 p {
                     margin: 1px;
-
                     strong {
                         display: block;
                         border-bottom: 1px dashed #e2e2e2;
@@ -115,26 +80,125 @@ section.post {
                 }
             }
         }
-    }
-    .post-info {
-        position: relative;
-        font-size: 14px;
-        padding-top: 5px;
 
-        code {
-            background-color: $color-code-backgroud;
-            color: $color-code;
-            font-size: 80%;
-            padding: 4px 5px;
-        }
-        a:hover {
-            color: $color-a-hover;
+        /** content **/
+        .post-content {
+            p {
+                margin-bottom: 25px;
+            }
+            h1,
+            h2 {
+                font-size: 1.5em;
+                line-height: 2;
+                margin-top: 30px;
+                border-bottom: 1px solid #e2e2e2;
+            }
+            h2,
+            h3,
+            h4 {
+                margin-bottom: 15px;
+                font-weight: normal;
+            }
+            
+            h3 {
+                padding-top: 20px;
+                font-size: 1.35em;
+            }
+            h4 {
+                font-size: 1.25em;
+            }
+
+            /** 分割线 **/
+            hr {
+                margin-bottom: 30px;
+                height: 4px;
+                border: none;
+                background-image: -webkit-linear-gradient(left, #003973, #e5e5be);
+                background-color: #ccc;
+                margin-left: -5px;
+                margin-right: -5px;
+            }
+            /** 引用 **/
+            blockquote {
+                padding: 20px 20px 20px 20px;
+                background: #fbfbfb;
+                border: 1px dashed #b9d5ff;
+                border-width: 1px 0;
+                font-family: monospace;
+                position: relative;
+                // margin-top: 42px;
+                p {
+                    margin-bottom: 0;
+                }
+            }
+
         }
     }
-    .post-directory {
-       float: right;
-       i {
-           font-size: 1.7em;
-       }
-    }
+}
+
+/** 代码高亮 **/
+pre {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    color: #abb2bf;
+    background: #282c34;
+}
+.hljs-comment,
+.hljs-quote {
+    color: #5c6370;
+    font-style: italic;
+}
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+    color: #c678dd;
+}
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+    color: #e06c75;
+}
+.hljs-literal {
+    color: #56b6c2;
+}
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+    color: #98c379;
+}
+.hljs-built_in,
+.hljs-class .hljs-title {
+    color: #e6c07b;
+}
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+    color: #d19a66;
+}
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+    color: #61aeee;
+}
+.hljs-emphasis {
+    font-style: italic;
+}
+.hljs-strong {
+    font-weight: bold;
+}
+.hljs-link {
+    text-decoration: underline;
 }
