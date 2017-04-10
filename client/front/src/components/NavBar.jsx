@@ -19,15 +19,34 @@ class NavBar extends Component {
             ICP : ""
         }
     }
+
     
     componentDidMount() {
         getOption()
             .then(res => {
                 let {blogName, blogDescription, url, faviconUrl, logoUrl, githubUrl, weiboUrl, ICP} = res[0];
                 this.setState({blogName, blogDescription, url, faviconUrl, logoUrl, githubUrl, weiboUrl, ICP});
-            })
+
+                this._initFavicon(faviconUrl);
+                this._consoleBlogDecription(blogDescription);
+
+            })    
     }
     
+    _initFavicon(faviconUrl) {
+        let links = document.getElementsByTagName("link");
+        for(let i=0;i<links.length;i++){
+            let link = links[i];
+            if(link.rel === "icon" || link.rel === "shortcut icon"){
+                link.href = faviconUrl;
+            }
+        }
+    }
+
+    _consoleBlogDecription(value) {
+        console.log(value);
+    }
+
     render() {
         return (
             <nav className='navbar'>

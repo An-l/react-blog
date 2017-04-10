@@ -2,7 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, IndexRoute, browserHistory, hashHistory } from 'react-router';
 
-// var Promise = require('es6-promise').Promise;
+// 兼容IE下的fetch
+import 'whatwg-fetch';
 require('es6-promise').polyfill();
 
 import style from './styles/scss/index.scss'
@@ -54,11 +55,6 @@ ReactDOM.render((
     ),
     document.getElementById('root')
 )
-
-// // To add to window  
-// if (!window.Promise) {  
-//   window.Promise = Promise;  
-// }  
 
 stopLoading();
 

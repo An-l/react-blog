@@ -1,44 +1,19 @@
 import React, { Component } from 'react';
 import NavBar from '../components/NavBar.jsx';
+import IfIE from '../components/IfIE.jsx';
 import ReactCSSTransitionGroup  from 'react-addons-css-transition-group';
 
 class HomeLayout extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         loading: true
-    //     }
-    //     this.initLoading = this.initLoading.bind(this);
-    //     this.stopLoading = this.stopLoading.bind(this);
-    // }
-    // componentWillReceiveProps(prevProps, prevState) {
-    //     this.initLoading();
-    // }
-    
-    // stopLoading() {
-    //     if (this.state.loading) {
-    //         this.setState({
-    //             loading: false
-    //         });
-    //     }
-    // }
-    // initLoading() {
-    //     if (!this.state.loading) {
-    //         this.setState({
-    //             loading: true
-    //         });
-    //     }
-    // }
-    
     render() {
         return (
-            <div className='body'>
+            <div className='body'>    
+                
                 <header className='navbar-wrap'>
                     <NavBar />
                 </header>
                 <main className='main'>
+                    <IfIE />
                     {this.props.children}
-                  
                     <footer className="footer">
                         © 2017&nbsp;-&nbsp; An-l的小站 &nbsp;-&nbsp;
                         <a target="_blank" href="https://github.com/an-l/blog">博客源码</a>
