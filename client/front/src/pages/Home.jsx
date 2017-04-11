@@ -24,7 +24,10 @@ class Home extends Component {
     componentDidMount() {
         countPost()
             .then(res => {
-                let pageNum = Math.ceil(res/this.state.limit); 
+                let pageNum = Math.ceil(res/this.state.limit);
+                return pageNum;
+            })
+            .then(pageNum => {
                 this._pageQuery(pageNum);
             })
     }

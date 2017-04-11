@@ -32,27 +32,6 @@ class Category extends Component {
             })
     }
 
-
-    //  // 从获取的文章数组中，初始化时间列表对象
-    // _initTimeList(postList, category) {
-    //     let newTimeList = {};
-
-    //     postList.length && postList.forEach(post => {
-    //         let timeArr = post['createdAt'].split("-",2);
-    //         let year = timeArr[0];
-
-    //         if(!newTimeList[year]){
-    //             newTimeList[year] = [];
-    //         }
-    //         newTimeList[year].push(post);
-    //     });
-
-    //     this.setState({
-    //         timeList: newTimeList,
-    //         activeCategory: category
-    //     });
-    // }
-
     // 改变当前选中的分类
     handleActiveChange(category) {
         getPostByCategory(category)
