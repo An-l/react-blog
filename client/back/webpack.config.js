@@ -12,11 +12,13 @@ module.exports = {
     ],
     output: {
         filename: 'bundle.js',
-        // the output bundle
+        // the output bundle 
 
         path: resolve(__dirname, 'dist'),
 
-        // publicPath: '/'
+        // publicPath: '/',
+        
+        // chunkFilename: '[name].[chunkhash:5].chunk.js'
         // necessary for HMR to know where to load the hot update chunks
     },
 
@@ -38,7 +40,7 @@ module.exports = {
         port: 8080,
         // 设置默认监听端口，如果省略，默认为"8080"
 
-        publicPath: '/'
+        // publicPath: '/'
         // match the output `publicPath`
     },
 
@@ -89,7 +91,22 @@ module.exports = {
         new webpack.ProvidePlugin({
            $: "jquery",
            jQuery: "jquery"
-       })
+       }),
+
+        new webpack.optimize.UglifyJsPlugin({
+            output: {
+                comments: false,  // remove all comments
+            },
+            compress: {
+                warnings: false
+            }
+        }),
+
+        new webpack.DefinePlugin({
+            "process.env": { 
+                NODE_ENV: JSON.stringify("production") 
+            }
+        })
     ],
 
     // 将html中引用的jq对象设置为全局模块

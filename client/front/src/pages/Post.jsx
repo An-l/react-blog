@@ -43,9 +43,13 @@ class Post extends Component {
         window.onclick = () =>{
             this._tocHide();
         }
+        window.ontouchstart = () =>{
+            this._tocHide();
+        }
     }
     componentWillUnmount() {
         window.onclick = null;
+        window.ontouchstart = null;
     }
     
     
@@ -71,20 +75,7 @@ class Post extends Component {
         });
     }
 
-    render() {
-        const {post} = this.state;
-
-        if (!Object.keys(post).length) {
-            return <Loading />
-        } else {
-            return (
-                this._renderPost(post)
-            );
-        }
-
-    }
-
-     // 渲染Toc的无状态组件
+     // 渲染Toc
     _renderToc (post) {
         const tocDropdownClass = classnames(['post-toc-dropdown', {'active': this.state.tocAcitve}])
         const tocClass = classnames(['post-toc-content', {'active': this.state.tocAcitve}])
@@ -95,13 +86,14 @@ class Post extends Component {
                 </a>
                 <div id="toc" className={tocClass}
                     onClick={this._tocShow}
+                    onTouchStart={this._tocShow}
                     dangerouslySetInnerHTML={{__html: post.toc}}>
                 </div>
             </div>
         )
     }
 
-     // 渲染文章content的无状态组件
+     // 渲染文章文content
     _renderContent ({ content='' }) {
         return (
             <div className="post-content"
@@ -109,6 +101,7 @@ class Post extends Component {
             </div>
         )
     }
+    // 渲染标签
     _renderTags ( tags=[] ) {
         return (
             tags.map(tag => {
@@ -120,6 +113,7 @@ class Post extends Component {
             })
         )
     }
+    // 渲染文章列表
     _renderPost(post) {
         return (
             <section className="post">
@@ -153,6 +147,19 @@ class Post extends Component {
                 <CloudTie id={post['_id']}/>
             </section>
         )
+    }
+
+    render() {
+        const {post} = this.state;
+
+        if (!Object.keys(post).length) {
+            return <Loading />
+        } else {
+            return (
+                this._renderPost(post)
+            );
+        }
+
     }
 }
 

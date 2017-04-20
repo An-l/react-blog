@@ -19,29 +19,29 @@ class NavbarC extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <Navbar light>
-            <NavbarBrand href="/">
-                -
-            </NavbarBrand>
-            <Nav className="nav pull-right" navbar>
-                <NavItem>
-                  <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}  size="sm">
-                    <DropdownToggle caret onClick={this.toggle} color='primary'>
-                      An-l
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem>log in</DropdownItem>
-                      <DropdownItem divider />
-                      <DropdownItem>log out</DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
-                </NavItem>
-            </Nav>
-        </Navbar>
-      </div>
-    );
+      return (
+        <div>
+          <Navbar light>
+              <NavbarBrand href="/">
+                  -
+              </NavbarBrand>
+              <Nav className="nav pull-right" navbar>
+                  <NavItem>
+                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}  size="sm">
+                      <DropdownToggle caret onClick={this.toggle} color='primary'>
+                        An-l
+                      </DropdownToggle>
+                      <DropdownMenu right>
+                        <DropdownItem>log in</DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem>log out</DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>
+                  </NavItem>
+              </Nav>
+          </Navbar>
+        </div>
+      );
   }
 }
 

@@ -3,6 +3,7 @@ import { Table, Button  } from 'reactstrap';
 // import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Modal from '../components/Modal.jsx';
 import { Link } from 'react-router';
+import Loading from '../components/Loading.jsx';
 
 class PostList extends Component {
     static propTypes = {
@@ -35,25 +36,29 @@ class PostList extends Component {
     render() {
         let {postList, modal, handelToggle, handelDelete} = this.props;
 
-        return (
-            <div className='table-wrapper'> 
-                <Table hover>
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>文章名</th>
-                        <th>分类</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {this.renderPost()}
-                    </tbody>
-                </Table>
-                
-                <Modal modal={modal} handelToggle={handelToggle} handelDelete={handelDelete}/>
-            </div>
-        );
+        if (!postList.length) {
+            return <Loading />
+        } else {
+            return (
+                <div className='table-wrapper'> 
+                    <Table hover>
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>文章名</th>
+                            <th>分类</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {this.renderPost()}
+                        </tbody>
+                    </Table>
+                    
+                    <Modal modal={modal} handelToggle={handelToggle} handelDelete={handelDelete}/>
+                </div>
+            );
+        }
     }
 }
 

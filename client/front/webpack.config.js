@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: [
-        // 'webpack-dev-server/client?http://localhost:80',
+        // 'webpack-dev-server/client?http://localhost:8080',
         // bundle the client for webpack-dev-server
         // and connect to the provided endpoint
 
@@ -37,7 +37,7 @@ module.exports = {
         contentBase: resolve(__dirname, 'dist'),
         // match the output path
 
-        port: 80,
+        port: 8080,
         // 设置默认监听端口，如果省略，默认为"8080"
 
         // publicPath: '/'
@@ -75,5 +75,20 @@ module.exports = {
 
         new webpack.NamedModulesPlugin(),
         // prints more readable module names in the browser console on HMR updates
+
+        new webpack.optimize.UglifyJsPlugin({
+            output: {
+                comments: false,  // remove all comments
+            },
+            compress: {
+                warnings: false
+            }
+        }),
+
+        new webpack.DefinePlugin({
+            "process.env": { 
+                NODE_ENV: JSON.stringify("production") 
+            }
+        })
     ]
 };

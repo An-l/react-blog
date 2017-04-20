@@ -61,20 +61,49 @@ class Sidebar extends Component {
             <section className='sidebar'>
                 <ul className='nav nav-pills nav-stacked nav-left'>
                     <li className="nav-item">
-                        <Link className={checkActive('post')} to='/admin/manage/post' onClick={() => this.handleChange('post')}><i className="iconfont icon-note"></i></Link>
+                        <Link 
+                            className={checkActive('post')}
+                            title='文章列表'
+                            to='/admin/manage/post' 
+                            onClick={() => this.handleChange('post')}>
+                                <i className="iconfont icon-note"></i>
+                            </Link>
                     </li>
                     <li className="nav-item">
-                            <Link className={checkActive('category')} to='/admin/manage/category' onClick={() => this.handleChange('category')}><i className="iconfont icon-regimentation"></i></Link>
+                            <Link 
+                                className={checkActive('category')}
+                                title='分类列表'
+                                to='/admin/manage/category' 
+                                onClick={() => this.handleChange('category')}>
+                                    <i className="iconfont icon-regimentation"></i>
+                                </Link>
                     </li>
                     <li className="nav-item">
-                            <Link className={checkActive('edit')} to='/admin/manage/edit' onClick={() => this.handleChange('edit')}><i className="iconfont icon-write"></i></Link>
+                            <Link 
+                                className={checkActive('edit')}
+                                title='markdown编辑器'
+                                to='/admin/manage/edit' 
+                                onClick={() => this.handleChange('edit')}>
+                                    <i className="iconfont icon-write"></i>
+                                </Link>
                     </li>
                     <li className="nav-item">
-                            <Link className={checkActive('setting')} to='/admin/manage/setting' onClick={() => this.handleChange('setting')}><i className="iconfont icon-theme"></i></Link>
+                            <Link 
+                                className={checkActive('setting')}
+                                title='博客信息设置'
+                                to='/admin/manage/setting' 
+                                onClick={() => this.handleChange('setting')}>
+                                <i className="iconfont icon-theme"></i>
+                            </Link>
                     </li>
                 </ul>
                 <div className='logout'>
-                    <Link className={checkActive('logout')}  onClick={this.handleLogout}><i className="iconfont icon-logout"></i></Link>
+                    <Link 
+                        className={checkActive('logout')}
+                        title='注销'
+                        onClick={this.handleLogout}>
+                        <i className="iconfont icon-logout"></i>
+                    </Link>
                 </div>
             </section>
         );

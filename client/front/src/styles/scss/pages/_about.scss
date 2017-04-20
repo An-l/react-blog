@@ -1,0 +1,17 @@
+.about {
+    .flex-item {
+        display: flex;
+        margin-bottom: 15px;
+        .flex-label {
+            width: 100px;
+        }
+        ul {
+            margin-top: 0;
+            padding-left: 0;
+            list-style: none;
+            li{
+                margin-top: 5px;
+            }
+        }
+    }
+}

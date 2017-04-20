@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Table, Button, Input } from 'reactstrap';
 // import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Modal from '../components/Modal.jsx';
-
+import Loading from '../components/Loading.jsx';
 
 class CategoryList extends Component {
     static propTypes = {
@@ -31,7 +31,7 @@ class CategoryList extends Component {
                             onChange={(e)=> this.props.handelInputChange(e, category)}/>
                     </td>
                     <td className='postNum'>
-                        <a href={`an-l.cn/category/${category.name}`}>{category.count || 0}</a>
+                        <a href={`http://118.89.24.64/category/${category.name}`} target='_blank'>{category.count || 0}</a>
                     </td>
                     <td>
                         <Button onClick={() => this.props.handelUpdate(category)} className='btn-primary-outline' color="primary" size="sm">编辑</Button>{' '}
@@ -43,36 +43,43 @@ class CategoryList extends Component {
     }
 
     render() {
-        return (
-            <div className='table-wrapper'> 
-                <Table hover>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>类别</th>
-                            <th>文章</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.renderCategory()}
-                        <tr>
-                            <th>Last</th>
-                            <td>
-                                <Input placeholder="类别名" size='sm' className='table-addInput'
-                                    value={this.props.addCategory}
-                                    onChange={this.props.handelAddInputChange}/>
-                            </td>
-                            <td></td>
-                            <td>
-                                <Button className="btn-info-outline" size="sm" onClick={this.props.handelAddClick}>添加</Button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </Table>
-                <Modal modal={this.props.modal} handelToggle={this.props.handelToggle} handelDelete={this.props.handelDelete}/>
-            </div>
-        );
+        
+        if (!this.props.categoryList.length) {
+            return <Loading />
+        } else {
+            return (
+                <div className='table-wrapper'> 
+                    <Table hover>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>类别</th>
+                                <th>文章</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {this.renderCategory()}
+
+                            <tr>
+                                <th>Last</th>
+                                <td>
+                                    <Input placeholder="类别名" size='sm' className='table-addInput'
+                                        value={this.props.addCategory}
+                                        onChange={this.props.handelAddInputChange}/>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <Button className="btn-info-outline" size="sm" onClick={this.props.handelAddClick}>添加</Button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </Table>
+                    <Modal modal={this.props.modal} handelToggle={this.props.handelToggle} handelDelete={this.props.handelDelete}/>
+                </div>
+            );
+        }
     }
 }
 

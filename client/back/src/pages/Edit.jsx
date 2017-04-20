@@ -3,6 +3,7 @@ import { Button } from 'reactstrap';
 import { getPostById, getCategory } from '../utils/request';
 import Editor from '../components/Editor-mde.jsx';
 import Tools from '../components/Tools.jsx';
+import Loading from '../components/Loading.jsx';
 
 class Edit extends Component {
     constructor(props) {
@@ -41,7 +42,9 @@ class Edit extends Component {
     }
 
     renderEditor() {
-        if (this.state.category.length) {
+        if (!this.state.category.length) {
+           return <Loading />
+        }else if(this.state.category.length) {
             return (
                 <Editor post={this.state.post} category={this.state.category} isUpdate={this.state.isUpdate}/>
             );
@@ -54,7 +57,7 @@ class Edit extends Component {
                 <Tools title={this.state.isUpdate ? '编辑文章' : '写文章'}>
                     <Button className='btn-primary-outline' color="primary" size='sm'
                         form='editForm'>
-                        {this.state.isUpdate ? '编辑文章' : '提交文章'}
+                        {this.state.isUpdate ? '提交编辑' : '提交文章'}
                     </Button>
                 </Tools>
                 <div className='content-wrapper'>

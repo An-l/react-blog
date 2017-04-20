@@ -114,7 +114,7 @@ class Category extends Component {
         countPostByCatogory
     }
     _renderCategoryList(){
-        if (this.state.categoryList.length) {
+        // if (this.state.categoryList.length) {
             return <CategoryList 
                         categoryList={this.state.categoryList}
                         modal={this.state.modal} 
@@ -126,7 +126,7 @@ class Category extends Component {
                         handelDelete={this.handelDelete}
                         handelToggle={this.handelToggle}
                         />
-        }
+        // }
     }
 
     render() {

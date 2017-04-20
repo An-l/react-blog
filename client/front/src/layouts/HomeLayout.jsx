@@ -29,17 +29,3 @@ class HomeLayout extends Component {
 }
 
 export default HomeLayout;
-
-// <ReactCSSTransitionGroup
-//                         className='animation-wrap clearfix'
-//                         component="div"
-//                         transitionName="page"
-//                         transitionEnterTimeout={500}
-//                         transitionLeaveTimeout={500}>
-//                         {React.cloneElement(this.props.children, {
-//                             key: this.props.location.pathname,
-//                             loading: this.state.loading,
-//                             initLoading: this.initLoading,
-//                             stopLoading: this.stopLoading
-//                         })}
-//                     </ReactCSSTransitionGroup>

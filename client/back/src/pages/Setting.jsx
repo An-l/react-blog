@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import Tools from '../components/Tools.jsx';
+import Loading from '../components/Loading.jsx';
 
 import { getOption, updateOptionById } from '../utils/request.js';
 

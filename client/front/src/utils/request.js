@@ -1,8 +1,8 @@
 
 export default function request (method, url, body) {
     method = method.toUpperCase();
-    url = 'http://127.0.0.1:3000/api/' + url;
-
+    url = 'http://118.89.24.64:3000/api/' + url;
+ 
     if (method === 'GET') {
         // fetch的GET不允许有body，参数只能放在url中
         body = undefined;

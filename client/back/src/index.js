@@ -34,6 +34,8 @@ ReactDOM.render((
     document.getElementById('root')
 )
 
+stopLoading();
+
 // 页面路由跳转前验证token
 function requireCredentials(nextState, replace, next) {
   let token = sessionStorage.getItem('blog-token') || '';
@@ -44,4 +46,10 @@ function requireCredentials(nextState, replace, next) {
     alert('请重新登录！');
     next();
   }
-}　　
+}
+
+
+function stopLoading() {
+    let loading = document.getElementById('loading');
+    document.body.removeChild(loading);
+}

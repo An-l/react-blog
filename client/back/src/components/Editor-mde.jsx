@@ -96,33 +96,6 @@ class markdownApp extends Component {
                 }
             }
         }
-
-        // let tocObj = {};
-        // let countH2 = 0;
-        // let countH3 = 0;
-        // for (let i = 0; i < tocArr.length; i++) {
-        //     let h = tocArr[i];
-        //     if (h.nodeName === 'H2') {
-        //         if (!tocObj[countH2]) {
-        //             tocObj[countH2] = {};
-        //         }
-        //         tocObj[countH2].content = h.textContent;
-        //         countH2++;
-        //     } else if (h.nodeName === 'H3') {
-        //         let tocH2 = tocObj[countH2 - 1];
-        //         if (!tocH2['subToc']) {
-        //             tocH2['subToc'] = {};
-        //         }
-        //         tocH2['subToc'][countH3] = {};
-        //         tocH2['subToc'][countH3].content = h.textContent;
-
-        //         if (tocArr[i+1] && tocArr[i+1].nodeName === 'H2') {
-        //             countH3 = 0;
-        //         }else {
-        //             countH3++;
-        //         }
-        //     } 
-        // }
         
         return h2Ul.outerHTML;
     }
@@ -342,7 +315,7 @@ class markdownApp extends Component {
                 <textarea className='md-content' 
                     placeholder="请输入markdown文本"
                     name='markdownContent'
-                    ref='editor'
+                    ref={(editorDom) => {this.editorDom = editorDom}}
                     onChange={(e) => {this.handleTextAreaChange(e.target.value)}}
                     onKeyDown={(e) => {this.handleKeyDown(e)}}
                     value={this.state.markdownContent || ''}>
